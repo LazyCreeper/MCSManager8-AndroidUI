@@ -20,4 +20,4 @@
 3. 刷新浏览器
 
 ## 开源协议
-MIT License
+GPL License
