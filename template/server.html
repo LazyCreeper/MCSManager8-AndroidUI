@@ -1,0 +1,290 @@
+<script>
+	   $(document).ready(function(){
+			mdui.mutation()
+        });
+		document.title="服务器管理 - MCSM 管理面板";
+</script>
+<div id='ServerList' class="OneContainer">
+	<div class="mdui-row">
+		<div class="mdui-col-md-12">
+			<div class="Panel PanelBlack" style="margin-bottom: 8px;">
+				<div class="PanelTitle">服务端实例管理</div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-sm-12 PanelItemF">
+						    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-a400" v-on:click="newServerx()">
+							        <span class="mdui-icon material-icons" >add</span>
+							    	创建新实例应用
+						    </button>
+							<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-teal-500" v-on:click="opt_all('start')">
+							        <span class="mdui-icon material-icons" >power_settings_new</span>
+							    	启动所有实例应用
+						    </button>
+							<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-red" v-on:click="opt_all('stop')">
+							        <span class="mdui-icon material-icons" >close</span>
+							    	关闭所有实例应用
+						    </button>
+							<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-grey-400" v-on:click="newDocker()">
+							        <span class="mdui-icon material-icons" >data_usage</span>
+							    	创建虚拟镜像
+						    </button>
+							<p style="color: #969292;line-height: 35px;float: right;">
+								若实例数量众多，可以使用 Ctrl+F 来查询
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 新的应用列表 -->
+	<div class="mdui-container-fluid" style="padding: 0px;">
+		<div class="mdui-row">
+			<div class="mdui-col-md-6 mdui-col-lg-4" v-for="item of items">
+				
+					<div class="Panel AppInlineBlockList ">
+						<!-- <div class="PanelTitle"></div> -->
+						<div class="PanelBody">
+
+							<div class="AppInlineBlockListTitle">
+								<h4 v-if="item.data.jarName == '' && !item.data.highCommande">
+									<s v-text="item.serverName"></s>
+									<span class="AppInlineBlockListTitleTip color-high-red">未配置</span>
+								</h4>
+								<h4 v-if="item.data.highCommande">
+									<span v-text="item.serverName"></span>
+									<span class="AppInlineBlockListTitleTip "><span class="FontGray">自定义</span></span>
+									<span class="AppInlineBlockListTitlePlayer">
+										<span v-text="item.data.currnetPlayers"></span>
+										/
+										<span v-text="item.data.maxPlayers"></span>
+									</span>
+								</h4>
+								<h4 v-if="item.data.jarName != '' && !item.data.highCommande">
+									<span v-text="item.serverName"></span>
+									<span class="AppInlineBlockListTitleTip"><span class="FontGray">普通</span></span>
+									<span class="AppInlineBlockListTitlePlayer">
+										<span v-text="item.data.currnetPlayers"></span>
+										/
+										<span v-text="item.data.maxPlayers"></span>
+									</span>
+								</h4>
+
+							</div>
+							<div class="AppInlineBlockListBody">
+								<div class="mdui-row">
+									<div class="mdui-col-xs-9">
+										<p>
+											<span v-if="item.data.run" class="color-green"> 状态: 正在运行 </span>
+											<span v-else="item.data.run" class="color-red"> 状态: 关闭 </span>
+
+										</p>
+										<hr style="margin-top: 8px;margin-bottom: 10px;">
+										<p>
+											<span class="FontGray">创建时间:</span>
+											<span v-text="item.data.createDate"></span>
+										</p>
+
+										<p>
+											<span class="FontGray">最后启动:</span>
+											<span v-text="item.data.lastDate"></span>
+										</p>
+										<p>
+											<span class="FontGray">时间期限:</span>
+											<span v-text="item.data.timeLimitDate || '无限期'"></span>
+										</p>
+										<p>
+											<span class="FontGray">文件名: </span>
+											<span v-text="item.data.jarName"></span>
+										</p>
+									</div>
+									<div class="mdui-col-xs-3" style="text-align: center;">
+										<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-grey-700" v-on:click="toTerminal(item.serverName);">
+							                <span class="mdui-icon material-icons" >code</span>
+							    	        终端
+						                </button>
+										<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-a400" v-on:click="toConsole(item.serverName);">
+							                <span class="mdui-icon material-icons" >dashboard</span>
+							    	        管理
+						                </button>
+										<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-grey-400"v-on:click="onRedirect('./template/component/server.html','server/get',item.serverName);">
+							                <span class="mdui-icon material-icons" >settings</span>
+							    	        参数
+						                </button>
+										<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-red-a200" v-on:click="toDeleteServer(item.serverName)">
+							                <span class="mdui-icon material-icons" >delete</span>
+							    	        删除
+						                </button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+<style>
+	.FontBlack {
+		color: #141414;
+	}
+
+	.FontGray {
+		color: #351a11;
+	}
+
+	.mbuttonWhite {
+		display: block;
+		margin-bottom: 2px;
+		color: #292929;
+		border: 1px solid #797676;
+		padding: 2px 2px;
+		text-align: center;
+		/* margin-right: 8px; */
+		font-size: 11px;
+		max-width: 90px;
+	}
+
+	.AppInlineBlockListTitle {
+		position: relative;
+		margin-top: -10px;
+	}
+	.AppInlineBlockListTitle h4 {
+	    font-size: 20px;
+        margin-bottom: 3px;
+        margin-top: 18px;
+        font-weight: 400;
+	}
+
+	.AppInlineBlockListTitlePlayer {
+		font-size: 13px;
+		margin-left:8%
+	}
+
+	.AppInlineBlockListTitleMuem {
+		position: absolute;
+		right: 12px;
+		top: 0px;
+		font-size: 14px;
+		color: rgb(26, 26, 26);
+	}
+
+	.AppInlineBlockListTitleMuem>a {
+		color: #2e2e2e;
+		display: inline-block;
+		margin-left: 6px;
+		border-radius: 1px;
+	}
+
+	.AppInlineBlockListBorderRed {
+		border-top: 3px solid rgb(196, 46, 46);
+	}
+
+	.AppInlineBlockListBorderBlack {
+		border-top: 3px solid #2e2e2e;
+	}
+
+	.AppInlineBlockListBorderGreen {
+		border-top: 3px solid rgb(37, 146, 37);
+	}
+
+	.AppInlineBlockList {
+		display: inline-block;
+		width: 100%;
+		margin: 6px 8px 8px 0px;
+		transition: all .4s;
+		height: 200px;
+		min-height: 200px;
+		max-height: 200px;
+		/* border-top: 3px solid rgb(255, 255, 255); */
+
+	}
+
+	.AppInlineBlockList p,
+	.AppInlineBlockList span {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.AppInlineBlockList:hover {
+		box-shadow: 0 0 12px #2d2d2d;
+		transition: all 0.5s;
+		transform: scale(1.01);
+	}
+
+	.AppInlineBlockListTitleTip {
+		border: 1px solid rgb(63, 216, 63);
+		border-radius: 3px;
+		padding: 2px 3px;
+		font-weight: 400;
+		letter-spacing: 1px;
+		font-size: 10px;
+	}
+
+	.AppInlineBlockListBody p,
+	.AppInlineBlockListBody aa {
+		/* display: block; */
+		margin-bottom: 1px;
+	}
+	.AppInlineBlockListBody button {
+		margin-bottom: 5px;
+	}
+	.AppInlineBlockListBody {
+	    margin-top: -10px;
+	}
+</style>
+
+
+<script>
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		TOOLS.definePage('template/server', 'server/view', null);
+
+		VIEW_MODEL.newVue('ServerList', {
+			el: '#ServerList',
+			methods: {
+				toConsole: function (serverName) {
+					MCSERVER.listenServername = serverName;
+					RES.redirectPage('./template/component/console.html', 'server/console', serverName);
+				},
+				onRedirect: function (link, api, serverName) {
+					RES.redirectPage(link, api, serverName);
+				},
+				newServer: function () {
+					RES.redirectPage('./template/component/newserver.html', null, '');
+				},
+				newServerx: function () {
+					RES.redirectPage('./template/component/newserverx.html', null, '');
+				},
+				opt_all: function (command) {
+					if (confirm("您真的要执行这个影响所有服务器的操作吗？")) {
+						WS.sendMsg('server/opt_all', command);
+						setTimeout(function () {
+							PAGE.refresh();
+						}, 2000);
+					}
+				},
+				toDeleteServer: function (serverName) {
+					var result = confirm('是否删除 [' + serverName + '] 这个服务端？\n注意: 删除服务器并不会删除服务端文件,只会从控制面板删除！');
+					if (!result) return;
+					WS.sendMsg('server/delete', serverName);
+					RES.redirectPage('./template/server.html', 'server/view');
+				},
+				toTerminal: function (serverName) {
+					//设置全局监听变量
+					MCSERVER.listenServername = serverName;
+					TOOLS.listenTerminal(serverName);
+					// RES.redirectPage('./template/component/terminal.html', null, '');
+				},
+				newDocker: function () {
+					RES.redirectPage('./template/component/new_docker_image.html', null, '');
+				}
+			}
+		});
+	});
+
+	MI.rListener('onend', function () { });
+</script>

@@ -1,0 +1,74 @@
+<div id="DialogDockerConfig">
+    <p>
+        <b>操作，查看此实例的 Docker 容器的配置项目</b>
+		<br>
+		<br>
+        虚拟化容器可让服务端出租给任何人也不用担心宿主机的安危，容器会保证每个子服都拥有独立空间。
+        <br>
+        如果您的系统上开启了 SELinux 建议关闭 SELinux 机制或自行配置权限。
+	</p>
+		<label class="mdui-checkbox">
+			<input type="checkbox" v-model="isDocker"/>
+			<i class="mdui-checkbox-icon"></i>
+			此服务端启用 Docker 容器（只支持 Linux 系统）
+		</label>
+	<div class="mdui-textfield">
+		<label class="mdui-textfield-label">等价启动命令</label>
+		<input class="mdui-textfield-input" type="text" disabled placeholder="" aria-describedby="sizing-addon3"
+            v-model="dockerCommand"/>
+			启动命令修改是无效的，只是展示等价命令效果。
+	</div>
+	
+	<div class="mdui-textfield ">
+		<label class="mdui-textfield-label">Docker 镜像名</label>
+		<input class="mdui-textfield-input" type="text" placeholder="可填，默认是名叫 mcsd 镜像。" aria-describedby="sizing-addon3"
+            v-model="dockerImageName"/>
+			镜像名，在创建虚拟镜像时填写的名称，一般默认即可。
+	</div>
+	
+	<div class="mdui-textfield ">
+		<label class="mdui-textfield-label">内存限制</label>
+		<input class="mdui-textfield-input" type="text" placeholder="可填，列如填写 2G 则代表容器最大可使用 2G 内存。" aria-describedby="sizing-addon3" v-model="dockerXmx"/>
+			以 GB 为单位，1G 为 1024 MB，最小 1GB 内存。不填写无限制。
+	</div>
+ 
+	<div class="mdui-textfield ">
+		<label class="mdui-textfield-label">开放端口</label>
+		<input class="mdui-textfield-input" type="text" placeholder="可填，列如 25565:25565" aria-describedby="sizing-addon3"
+            v-model="dockerPorts"/>
+			开放的端口,冒号左边代表容器内部端口,右边代表宿主机端口,通常保持相同即可。<br>
+			<span class="mdui-text-color-red-a400">目前最多只准许开放一个</span>
+	</div>
+	
+    <p>确认无误之后，单击保存即可 | &nbsp;
+        <a href="https://github.com/Suwings/MCSManager/blob/gh-pages/Question_3.md" style="color:rgb(32, 32, 192);" target="_blank">什么是
+            Docker ?</a>
+    </p>
+	<button class="mdui-btn mdui-btn-raised mdui-ripple bg-green" v-on:click="ok()"><i class="mdui-icon material-icons">edit</i>
+	  保存设置
+	</button>
+<p></p>
+</div>
+<script>
+    WS.sendMsg('docker/config', PAGE.selectServerName, function (obj) {
+        new Vue({
+            el: "#DialogDockerConfig",
+            data: obj.ResponseValue,
+            methods: {
+                ok: function () {
+                    WS.sendMsg('docker/setconfig', JSON.stringify({
+                        serverName: PAGE.selectServerName,
+                        dockerConfig: {
+                            dockerCommand: this.dockerCommand.trim() || "",
+                            dockerImageName: this.dockerImageName.trim() || "mcsd",
+                            dockerXmx: this.dockerXmx.trim(),
+                            dockerPorts: this.dockerPorts.trim(),
+                            isDocker: this.isDocker
+                        }
+                    }));
+                    TOOLS.popWindClose();
+                }
+            }
+        });
+    });
+</script>

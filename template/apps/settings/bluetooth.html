@@ -1,0 +1,111 @@
+<div class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">蓝牙</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu233'}"><i class="mdui-icon material-icons">&#xe5d4;</i></a>
+			<!--菜单-->
+			<ul class="mdui-menu" id="menu233">
+				<li class="mdui-menu-item">
+					<a href="javascript:PAGE.refresh();" class="mdui-ripple">
+						刷新
+					</a>
+				</li>
+				<li class="mdui-menu-item">
+					<a href="javascript:;" class="mdui-ripple" id="rename">
+						重命名此设备
+					</a>
+				</li>
+				<li class="mdui-menu-item">
+					<a href="javascript:mdui.alert('暂无','蓝牙文件');;" class="mdui-ripple" >
+						显示收到的文件
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="mdui-toolbar mdui-color-blue-grey-700">
+			<div class="mdui-list-item-content">
+				<div class="mdui-list-item-title" style="margin-left: 40px;width: 10%;"><span id="WIFI_OPEN_TEXT">开启</span></div>			
+			</div>
+			<label class="mdui-switch" style="padding-right: 33px;width: 5%;">
+				<input type="checkbox" checked id="WIFI_OPEN"/>
+				<i class="mdui-switch-icon"></i>
+			</label>
+		</div>
+	</div>
+	<div style="margin-top:130px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row" >
+			<div class="mdui-col-md-12">
+				<div class="mdui-card" style="margin-bottom: 20px;" id="WIFI_List">
+					<div class="PanelTitle">可用设备</div>
+					<div class="PanelBody">
+						<div class="mdui-list">
+							<li class="mdui-list-item mdui-ripple" onclick="mdui.alert('配对失败');">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe551;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">红米Note5A</div>
+								</div>
+							</li>
+						</div>
+					</div>
+				</div>
+				<span id="WIFI_List2">开启蓝牙后，附近的设备可以检测到该设备</span>
+				<div id="WIFI_CLOSED" class="mdui-text-center" style="display:none;margin-top: 20%;">
+					<div class="mdui-typo-display-1-opacity">开启蓝牙后，您的设备可以与附近其他的蓝牙设备通信</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	
+	//重命名设备
+	mdui.$('#rename').on('click', function(){
+		mdui.dialog({
+			title: '重命名此设备',
+			content: '<div class="mdui-textfield">'+
+					 '<input class="mdui-textfield-input" type="text" value="MiPAD"/>'+
+					 '</div>',
+			buttons: [
+				{text: '取消'},
+				{text: '保存',
+					onClick: function(inst){
+						mdui.alert('保存失败');
+					}
+				}
+			]
+		});
+	});
+	
+	//关闭蓝牙（好吧我偷懒了
+	mdui.$('#WIFI_OPEN').on('click', function(){
+		$('#WIFI_OPEN_TEXT').replaceWith('关闭');
+		$('#WIFI_List').css('display','none');
+		$('#WIFI_List2').css('display','none');
+		$('#WIFI_CLOSED').css('display','block');
+	});
+	
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/bluetooth', 'genuser/home', null);
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

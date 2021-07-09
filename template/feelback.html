@@ -1,0 +1,116 @@
+<div id='' class="OneContainer mdui-typo">
+	<div class="mdui-row">
+		<div id='News' class="mdui-col-md-8">
+			<div class="Panel PanelBlack">
+				<div class="PanelTitle">最新动态与信息通知</div>
+				<div class="PanelBody" style="max-height: 94vh;overflow-y: scroll;">
+					<p>关注这里，如果出现BUG/新版本我们会立即通告 (面板自动每天定时更新)</p>
+					<div class="news" v-for="item of items">
+						<p class="color-gray" v-text="item.time"></p>
+						<p v-text="item.msg"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mdui-col-md-4">
+			<div class="Panel PanelBlack">
+				<div class="PanelTitle">客户使用反馈</div>
+				<div class="PanelBody">
+					<p>如果使用中遇到任何问题或发现错误，可反馈到此:</p>
+					<p>邮箱: <a href="mailto:Suwings@outlook.com">Suwings@outlook.com</a><br>
+					Github:
+						<a href="https://github.com/Suwings/MCSManager/issues">点击此处</a>
+					</p>
+
+				</div>
+			</div>
+			<div class="Panel PanelGreen">
+				<div class="PanelTitle">支持开发团队</div>
+				<div class="PanelBody">
+					<p>支持开发团队，支持开源项目</p>
+					<p>爱发电赞助平台:
+						<a target="_blank" href="https://afdian.net/@mcsmanager">https://afdian.net/@mcsmanager</a>
+					<br>
+					资助支付宝二维码:
+						<a target="_blank" href="template/other/sponsor.html">二维码地址</a>
+					<br>
+					宣传贴:
+						<a target="_blank" href="http://www.mcbbs.net/thread-140678-1-1.html">点击此处</a>
+					<br>
+					软件所有代码与文件均可转载，修改。</p>
+				</div>
+			</div>
+
+			<div class="Panel PanelRed">
+				<div class="PanelTitle">开源软件</div>
+				<div class="PanelBody">
+					<p>项目完全开源：<br>
+					<a href="https://github.com/Suwings/MCSManager"
+							target="_blank">https://github.com/Suwings/MCSManager </a><br>
+					使用 MIT License<br>
+					<small>A short and simple permissive license with conditions only requiring preservation of
+							copyright and license notices. Licensed works, modifications, and larger works may be
+							distributed under different terms and without source code.</small></p>
+				</div>
+			</div>
+			
+			<div class="Panel PanelRed">
+				<div class="PanelTitle">关于主题</div>
+				<div class="PanelBody">
+					<p>该主题由<a href="https://www.lazy.ink" target="_blank">Lazy</a>开发，如果使用中遇到任何问题或发现错误，可反馈到我的邮箱：<a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a><br>
+					主题<span class="mdui-text-color-red">完全免费！</span>严禁倒卖！<br>
+					主题发布地址：<a href="https://blog.imlazy.ink:233/index.php/archives/124/" target="_blank" >点击前往</a><br>
+					赞助二维码：<a href="https://imgs.lovpass.cn/img/2019/08/04/5d46e137187ba.jpg" target="_blank">点击前往</a><br>
+					当前主题版本：<span class="color-gray" id="update" mdui-tooltip="{content: '点我检查更新'}">1.0.4 正式版</span>
+					
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+</div>
+<script src="https://api.imlazy.ink/update/update.js"></script>
+<script>
+document.title="服务与支持 - MCSM 管理面板";
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		TOOLS.definePage('template/feelback', '', null);
+
+		//请求早已缓存的 最新动态
+		RES.ajax({
+			type: 'GET',
+			url: './public/news.json',
+			success: function (data) {
+				VIEW_MODEL['News'] = data;
+				VIEW_MODEL.newVue('News', {
+					el: '#News',
+				});
+				MI.routeCopy('News', data);
+				VIEW_MODEL.newVue('SystemUp', {
+					el: '#SystemUp'
+				});
+
+			}
+		});
+	$("#update").click(function(){
+		var ver1 = {"mdui": "1.0.4 正式版"}//请勿修改版本号
+        if (ver1.mdui == ver2.mdui) {
+		mdui.dialog({
+		title: '检查更新',
+		content: '偶也~ヾ(≧▽≦*)o——你的MCSM主题为最新版本！',
+		buttons: [{text: '取消'},{text: '确认',}]});
+		} else {
+		mdui.dialog({
+		title: '检查更新',
+		content: '当前版本为：'+ver1.mdui+'<br>最新版本为：'+ver2.mdui+'<br>更新内容：<br>'+ver2.mduitext+'<br>你可以点击<code>确定</code>按钮前往主题发布页进行下载更新',
+		buttons: [{text: '取消'},{text: '确认',onClick: function(inst){
+		window.open('https://blog.imlazy.ink:233/index.php/archives/124/');}}]});}
+	});
+	})
+	
+	MI.rListener('onend', function () { })
+</script>

@@ -1,0 +1,85 @@
+<div class="mdui-container-fluid" id='Memory'>
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">内存</a>
+		</div>
+	</div>
+	<div style="margin-top:60px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row">
+			<div class="mdui-col-md-12">
+				<div class="PanelBody">
+					<div class="mdui-list">
+						<p class="mdui-text-color-teal-500">内存使用量<br>
+						<span style="font-size:2em">{{ (sysTotalmem - sysFreemem).toFixed(1) }}</span> MB
+						</p>
+						<div class="mdui-progress mdui-color-teal-100" style="height: 30px;">
+							<div id="mem_usage" class="mdui-progress-determinate mdui-color-teal-500" style="width:"></div>
+						</div>
+						<p>总内存：{{ sysTotalmem }} MB<br>
+						使用量：<span id="mEm_usage">{{ (sysTotalmem - sysFreemem).toFixed(1)/sysTotalmem * 100 }}</span> %<br>
+						可用：{{ sysFreemem }} MB</p>
+					</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<style>.gray {color: #757575;}</style>
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+		$('#mem_usage').css('width',$('#mEm_usage').text() + '%')
+    });
+	
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/memory', 'center/show', null);
+		
+		PAGE.time = function (value) {
+			return function () {
+				var theTime = parseInt(Math.floor(this.uptime)); // 秒
+				var theTime1 = 0; // 分
+				var theTime2 = 0; // 小时
+				if (theTime > 60) {
+					theTime1 = parseInt(theTime / 60);
+					theTime = parseInt(theTime % 60);
+					if (theTime1 > 60) {
+						theTime2 = parseInt(theTime1 / 60);
+						theTime1 = parseInt(theTime1 % 60);
+					}
+				}
+				var result = "";
+				if (theTime1 > 0) {
+					result = "" + parseInt(theTime1) + "分";
+				}
+				if (theTime2 > 0) {
+					result = "" + parseInt(theTime2) + "时" + result;
+				}
+				return result;
+			}
+		}
+		
+		VIEW_MODEL.newVue('centerShow', {
+			el: '#Memory',
+			methods: {
+				time: PAGE.time()
+			}
+		});
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

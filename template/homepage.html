@@ -1,0 +1,148 @@
+<div class="OneContainer">
+<div style="background:url(./common/img/bg.jpg);background-size:cover;position:fixed;height:100%;width:100%;left: 0;top: 0px;"></div>
+<style>
+.main-app {
+	margin:10px;
+    text-align: center;
+	padding: 3px;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.main-app img {
+    width: 50px;
+    display: block;
+    margin: 0 14% 6px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.main-app a {
+	color:#fff;
+	text-shadow: 0px 0px 5px #000;
+}
+
+.main-app:hover {
+	background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.54);
+	transition: all 0.3s;
+}
+
+.bottom-apps {
+	position: fixed;
+    width: 1360px;
+    bottom: 55px;
+    /*background: rgba(0, 0, 0, 0.35);*/
+}
+.b-a-s {
+    display: inline-block;
+}
+</style>
+
+			<div class="mdui-row">
+					
+				<div class="mdui-col-md-12" style="background: rgba(0, 0, 0, 0.5);">
+					<div class="mdui-textfield">
+						<i class="mdui-icon material-icons" style="color: #ddd;">search</i>
+						<input class="mdui-textfield-input" type="text" placeholder="搜 索" style="color: #ddd;">
+					</div>
+				</div>
+						
+				<!--桌面时钟-->
+				<div class="mdui-col-xs-12">
+						<span style="margin: 0 43%; line-height: 2em; font-size: 6em;color: #fff;">
+						<span id="time2">00:00</span><br>
+					</span>
+							
+					<span style="margin: -30px 43.2%;font-size: 19px;color: #eaeaea;white-space: nowrap;position: absolute;">
+						<span id="date">1949年10月1日 星期六</span>
+					</span>
+				</div>
+			</div>
+			<br>
+			<div class="mdui-row">
+				<!--应用模板，每行12个应用-->
+				<div class="mdui-col-md-12">  
+						
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', 'genuser/home');">
+						<img src="./common/img/apps/settings.webp">
+						<a>设置</a>
+					</div>
+					
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/center.html', 'center/show');">
+						<img src="./common/img/apps/devcheck.png">
+						<a>DevCheck</a>
+					</div>
+
+					<div class="main-app  mdui-ripple mdui-ripple-white">
+						<img src="./common/img/apps/bilibili.png">
+						<a href="javascript:;">哔哩哔哩动画</a>
+					</div>
+									
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="window.location.href='ms-windows-store://'">
+						<img src="./common/img/apps/ms-store.png">
+						<a href="javascript:;">Microsoft Store</a>
+					</div>
+							
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="window.location.href='minecraft://'">
+						<img src="./common/img/apps/minecraft.png">
+						<a href="javascript:;">Minecraft</a>
+					</div>
+									
+				</div>
+				<!--END-->
+			</div>
+			
+			<!--底部抽屉-->
+			<div class="mdui-row">
+				<div class="mdui-col-md-12 bottom-apps">
+				<div class="mdui-col-md-3 b-a-s">
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/phone.html', 'genuser/home');">
+						<img src="./common/img/apps/phone.png">
+						<a href="javascript:;">电 话</a>
+					</div>
+				</div>
+				<div class="mdui-col-md-3 b-a-s">
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/userset.html', 'userset/update');">
+						<img src="./common/img/apps/联系人.png">
+						<a href="javascript:;">联系人</a>
+					</div>
+				</div>
+				<div class="mdui-col-md-3 b-a-s">
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="window.location.href='sms://'">
+						<img src="./common/img/apps/短信.png">
+						<a href="javascript:;">短 信</a>
+					</div>
+				</div>
+				<div class="mdui-col-md-3 b-a-s">
+					<div class="main-app  mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/chrome.html', 'center/show');">
+						<img src="./common/img/apps/chrome.png">
+						<a href="javascript:;">Chrome</a>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		<script>
+					
+			$ (function() {
+
+			});
+		</script>
+		<script>
+		MI.rListener('onload', function () {
+			// 定义页面地址
+			TOOLS.definePage('template/homepage', 'genuser/home', '');
+			
+			document.title="MCSM 管理面板";
+			$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12, 0) 100%)');	
+			
+			$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+			
+			$('#ConsoleMain').css('max-width', '1360px');
+		})
+
+		MI.rListener('onend', function () {
+			$('#ConsoleMain').css('max-width', 'auto');
+		})
+		</script>

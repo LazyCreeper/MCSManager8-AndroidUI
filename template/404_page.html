@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="zh-CN" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no" />
+
+	<title>404 Not Found - MCSM  管理面板</title>
+
+	<link href="../common/css/action.css" rel="stylesheet" />
+	<link href="../common/css/common.css" rel="stylesheet">
+	<link href="../common/css/unit.css" rel="stylesheet" />
+
+    <link href="../common/css/mdui.css" rel="stylesheet">
+	<link href="../common/css/ionicons.min.css" rel="stylesheet">
+	<link href="../favicon.ico" rel="shortcut icon">
+	<!--[if lt IE 9]>
+      		<div id='Not_' class="show-ui" style="height: 40px;background-color: rgb(221,79,67);text-align:center;line-height: 40px;color: white;">
+            	<b>无法访问! 您的浏览器版本过低或是兼容模式,请使用最新/更高版本的浏览器: IE10+ chrome FireFox 等，如果是国内浏览器请打开极速浏览模式（webkit内核）。</b>
+        	</div>
+   	<![endif]-->
+</head>
+
+<body>
+	<div id='Header'>
+		<div id='MasterLogo' class="HeaderItem mdui-ripple mdui-ripple-white" onclick="MCSERVER.colmDo()" style="cursor: pointer;">
+			<img src="../common/logo.png" width="160px" height="100%" />
+		</div>
+		<div class="" onclick="MCSERVER.colmDo()" style=" display: inline-block;overflow: hidden;text-align: center; line-height: 50px;color: rgb(250, 250, 250);font-size: 12px; padding: 0 12px;cursor: pointer;transition: background-color 0.4s;user-select: none;/*别问，问就是懒*/">
+				<span class="mdui-icon material-icons">menu</span>
+		    </div>
+		<!--<div id="HeaderInfo" class="mdui-ripple mdui-ripple-white HeaderTitle"></div>-->
+		<div class="HeaderR">
+			
+			<div class="PhoneDisplayNone mdui-ripple mdui-ripple-white" onclick="PAGE.refresh()" mdui-tooltip="{content: '刷新'}">
+				<i class="mdui-icon material-icons">refresh</i>
+			</div>
+			<div id='websocket' class="PhoneDisplayNone mdui-ripple mdui-ripple-white" mdui-tooltip="{content: 'Cannot Connect！'}">
+				<i class="mdui-icon material-icons">signal_cellular_connected_no_internet_4_bar</i>
+			</div>
+			<div id='TitleUser login' class="PhoneDisplayNone mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '用户名'}">
+				<span>
+					<i class="mdui-icon material-icons">warning</i>
+					Unknown
+				</span>
+			</div>
+			<div id='loginOut' class="mdui-ripple mdui-ripple-white">
+				<i class="mdui-icon material-icons">directions_walk</i>
+				退出
+			</div>
+		</div>
+	</div>
+	
+	<div id='MainContainer'>
+	<!--左侧菜单-->
+		<div id='SideCol'>
+			<div id="SideColMenu">
+				<div id='SideColMenuInfo' >
+					Mcserver Manager 
+					<br>
+					<div id='websocket2'>
+						<span>当前状态：<span style="color:red">404</span></span>
+					</div>
+				</div>
+				<div id='SideColFor' >
+					<!--菜单-->
+					<a href="#" class="mdui-ripple mdui-ripple-white">
+						<span>404 Not Found</span>
+					</a>
+					<a href="#" class="mdui-ripple mdui-ripple-white">
+						<span>404 Not Found</span>
+					</a>
+					<a href="#" class="mdui-ripple mdui-ripple-white">
+						<span>404 Not Found</span>
+					</a>
+					<a href="#" class="mdui-ripple mdui-ripple-white">
+						<span>404 Not Found</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div id="Container">
+			<div id="ConsoleMain" >	
+				<!--登录-->
+				<div id="login-1" class="mdui-typo "  style="
+    margin-left: 35%;
+    margin-top: 10%;
+	text-align:center">
+				<div class="mdui-row">
+					<div class="mdui-col-md-6" >
+						<div class=" mdui-text-center mdui-typo-display-3">404 Not Found</div>
+						<h3>你所访问的页面不存在！</h3>
+						    <div class="mdui-m-t-4">
+							   <button class="mdui-btn mdui-btn-block mdui-color-pink mdui-ripple mdui-btn-raised" onclick="top.location='/','_top'">返回控制面板</button>
+							   <p></p>
+								<div class="mdui-chip" mdui-dialog="{target: '#help'}">
+					        		<span class="mdui-chip-icon mdui-color-red"><i class="mdui-icon material-icons">help_outline</i></span>
+					        		<span class="mdui-chip-title">获取帮助</span>
+					        	</div>
+					        	<div class="mdui-chip" mdui-dialog="{target: '#aboutme'}">
+					        		<span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">copyright</i></span>
+					        		<span class="mdui-chip-title">2020 Lazy. All rights reserved.</span>
+					        	</div>
+					        </div>
+					    </div>  
+					</div>
+				</div>
+				<!--可变动内嵌html区域结束-->
+			</div>
+		</div>
+	</div>
+	
+	<div class="mdui-dialog" id="help">
+        <div class="mdui-dialog-content">暂无帮助</div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>确定</button>
+        </div>
+    </div>
+	
+	<div class="mdui-dialog mdui-typo" id="aboutme">
+	    <div class="mdui-dialog-title">关于</div>
+        <div class="mdui-dialog-content"><p>该主题由<a href="https://blog.imlazy.ink:233" target="_blank">Lazy</a>开发，如果使用中遇到任何问题或发现错误，可反馈到我的邮箱：<a href="mailto:lazy_creeper@qq.com">lazy_creeper@qq.com</a><br>
+					主题<span class="mdui-text-color-red">完全免费！</span>严禁倒卖！<br>
+					主题发布地址：<a href="https://blog.imlazy.ink:233/index.php/category/mcsm-theme/" target="_blank">点击前往</a><br>
+					微信赞助二维码：<a href="https://imgs.lovpass.cn/img/2019/08/04/5d46e137187ba.jpg" target="_blank">点击前往</a>
+					</p></div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>确定</button>
+        </div>
+    </div>
+
+	<!--菜单改变按钮-->
+	
+	<script src="../common/js/mdui.js" type="text/javascript"></script>
+	<!--JavaScript 文件引用，顺序不能乱，大部分 js 都是依赖于前 js 的-->
+	<script type="text/javascript" src="../common/jquery-3.2.1.min.js"></script>
+	
+	<script type="text/javascript" src="../login/common/js/common.js"></script>
+	
+	<script type="text/javascript">
+		var $$ = mdui.JQ;
+		mdui.JQ('#loginOut').on('click', function(){
+  mdui.dialog({
+    title: '警告',
+    content: '真的要退出码？',
+    buttons: [
+      {
+        text: '取消'
+      },
+      {
+        text: '确认',
+        onClick: function(inst){
+          window.opener = null;
+window.open('', '_self');
+window.close();
+        }
+      }
+    ]
+  });
+});
+	</script>
+	
+</body>
+
+</html>

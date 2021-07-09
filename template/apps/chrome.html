@@ -1,0 +1,98 @@
+<style>
+.chrome-input-url {
+    width: 100%;
+    border-radius: 20em;
+    border: none;
+    background: #d4d4d4;
+    line-height: 33px;
+}
+.chrome-frame {
+    position: fixed;
+    width: 100%;
+    height: 89%;
+    margin: 0!important;
+    padding: 0!important;
+	border:0;
+}
+#ConsoleMain {
+	max-width:100%
+}
+.mdui-container-fluid {
+    padding-left: 0px;
+}
+</style>
+<div id='' class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-grey-200">
+			<a id="go-home" href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe88a;</i></a>
+			<input class="mdui-typo-title chrome-input-url" value="https://www.google.cn/chrome/thank-you.html">
+			<div class="mdui-toolbar-spacer"></div>
+			<a id="go-url" href="javascript:;" mdui-tooltip="{content: '前往'}" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe163;</i></a>
+			<a id="chrome-refresh" href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">refresh</i></a>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu233'}"><i class="mdui-icon material-icons">more_vert</i></a>
+			<ul class="mdui-menu" id="menu233">
+				<li class="mdui-menu-item">
+					<a href="javascript:mdui.alert('禁止登陆');" class="mdui-ripple">
+						<i class="mdui-menu-item-icon mdui-icon material-icons">&#xe853;</i> 登录
+					</a>
+				</li>
+			
+				<li class="mdui-divider"></li>
+			
+				<li class="mdui-menu-item">
+					<a href="javascript:mdui.alert('<h1><img src=./common/img/apps/chrome.png width=43px;>Google Chrome</h1><br>版本：1.0.0 MCSM 特供版','关于 Chrome');;" class="mdui-ripple">
+						<i class="mdui-menu-item-icon mdui-icon material-icons">&#xe88f;</i>关于
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div style="margin-top:68px"></div>
+	<iframe class="chrome-frame" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts" src="https://www.google.cn/chrome/thank-you.html"></iframe>
+
+</div>
+		
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	//创建
+	MI.rListener('onload', function () {
+		//设置样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(156, 156, 156) 10%, rgb(238, 238, 238) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		$('#ConsoleMain').css('max-width', '100%');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/chrome', 'genuser/home', null);
+		
+		//返回主页
+		$("#go-home").click(function(){
+			$(".chrome-input-url").val("https://www.baidu.com");
+			$(".chrome-frame").attr("src","https://www.baidu.com");
+		});
+		
+		//前往Url
+		$("#go-url").click(function(){
+			var urlss = $(".chrome-input-url").val();
+			$(".chrome-frame").attr("src",urlss);
+		});
+		
+		
+		//刷新
+		$("#chrome-refresh").click(function(){
+			$('.chrome-frame').attr('src', $('.chrome-frame').attr('src'));
+		});
+		
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+		//$('#ConsoleMain').css('max-width', '1360px');
+		$('.mdui-container-fluid').css('padding-left', '8px');
+	})
+</script>

@@ -1,0 +1,560 @@
+html,
+body {
+	font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+	-webkit-tap-highlight-color: rgba(26,26,26,0);
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+
+code {
+	font-family: sans-serif,'Segoe UI', Tahoma, Geneva, Verdana;
+	color: #00ff37!important;
+    background-color: rgba(0, 0, 0, 0.5)!important;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+a {
+	cursor: pointer;
+}
+
+a,
+input {
+	outline: none;
+}
+
+.btn {
+	border-radius: 0px;
+	transition: opacity 1s;
+}
+
+.btn:hover {
+	opacity: 0.7;
+}
+
+/*登陆界面*/
+#login-1 {
+	margin-left: 32%;
+}
+
+/* 页面主要容器 */
+#MainContainer {
+	background: #ECEFF1;
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    bottom: 1px;
+    z-index: 100;
+    overflow: hidden;
+    overflow-y: auto;
+    zoom: 1;
+}
+/*
+-----------
+全局css定义结束
+-----------
+*/
+
+#Header {
+	background-image:background-image: linear-gradient(rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12, 0) 100%);
+    height: 35px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 102;
+    font-size: 1px;
+}
+
+/* logo 图片 */
+
+#MasterLogo img {
+	animation: MasterLogoTitle 10s ease infinite;
+	animation-iteration-count: 100;
+	margin-top:12px
+}
+
+/* logo 块 */
+
+#MasterLogo:hover {
+	/*animation: MasterLogoImg 2s;*/
+	color:#aaa
+}
+
+.HeaderPress{
+	float: right;
+}
+
+/*标题*/
+
+.HeaderItem {
+	color: #E5E5E5;
+	line-height: 50px;
+	font-size: 14px;
+	margin: 0;
+	float: left;
+	width: 180px;
+	text-align: center;
+}
+
+/*标题的右侧菜单*/
+
+.HeaderTitle {
+	display: inline-block;
+	*zoom: 1;
+	overflow: hidden;
+	text-align: center;
+	line-height: 50px;
+	color: rgb(252, 252, 252);
+	font-size: 12px;
+	padding: 0 16px;
+	font-weight: 400;
+}
+
+/* 菜单栏 */
+.HeaderL {
+	float: left;
+    max-height: 50px;
+	font-size: 14px;
+}
+
+.HeaderR {
+	float: right;
+    max-height: 50px;
+}
+
+.HeaderL,.HeaderR div {
+	display: inline-block;
+    overflow: hidden;
+    *zoom: 1;
+    line-height: 2;
+    color: rgb(250, 250, 250);
+    padding: 0 2px 2px 2px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 400;
+	margin: 0 1px;
+}
+
+.HeaderR i {
+	font-size: 21px;
+}
+
+.HeaderR div:hover {
+	/*background-color: #003c58;*/
+}
+
+/* 菜单栏控制 */
+#SideCol {
+    position: fixed;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 1001;
+    width: 100%;
+    height: 95%;
+    bottom: 49px;
+}
+
+/*底部导航栏*/
+/*#bottom-menu {
+	background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%);
+    height: 50px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    z-index: 102;
+	text-align: center;
+}*/
+
+.mdui-bottom-nav {
+	background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%);
+}
+
+.mdui-bottom-nav i {
+	color: #fff;
+    transform: rotate(90deg);
+    font-size: 42px;
+    margin: 3px 3%;
+	cursor:pointer;
+	opacity: 1!important;
+}
+
+.mdui-bottom-nav a .mdui-icon {
+	opacity: 1!important;
+}
+#Container {
+	position: absolute;
+	width: auto;
+	top: 30px;
+	left: 0px;
+	right: 0px; 
+    margin-bottom: 55px;
+}
+
+/* 右侧容器 */
+#ConsoleMain {
+	max-width: 1360px;
+	margin: auto;
+}
+
+/*布局结束*/
+
+
+/* 菜单选择后的颜色 */
+.MeumSelect {
+	margin-left: 8px;	
+	background: #353535;
+    /*border-left: 5px solid #58a2ff;*/
+}
+
+/*左侧的菜单*/
+
+#SideColMenu {
+	height: 100%;
+}
+
+#SideCol {
+	display:none;
+}
+
+#SideColMenuInfo {
+	color: rgb(189, 189, 189);
+	font-size: 32px;
+    margin: 47px 69px;
+	font-family:'小米兰亭','微软雅黑'
+}
+
+#SideColMenu a {
+	border-radius: 5px;
+    display: inline-block;
+    width: 23%;
+    height: 20em;
+    color: white;
+    line-height: 45px;
+    text-align: left;
+    padding-left: 35px;
+    font-size: 13px;
+    transition: background-color 0.5s, margin-left 0.3s;
+    margin: 25px 68px;
+}
+
+#SideColMenu a span {
+	margin-left: 10px;
+}
+
+#SideColMenu a i {
+	font-size: 18px;
+}
+
+#SideColMenu a:hover {
+	text-decoration: none;
+	opacity: 0.9;
+    background: #353535;
+}
+
+
+/*菜单的收缩*/
+
+#ShowMenu {
+	position: absolute;
+	top: 46%;
+	left: -30px;
+	background: #14ff9d;
+    width: 37px;
+    height: 55px;
+	text-align: center;
+	z-index: 103;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+#ShowMenu:hover {
+	width: 20px;
+    height: 55px;
+    left: 0px;
+    transition: all 0.5s;
+    background: #c3ff30;
+}
+
+
+/*针对于单页的首页容器*/
+
+.OneContainer {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	overflow: auto;
+}
+
+/* 可以设置不同的进入和离开动画 */
+
+/* 设置持续时间和动画函数 */
+
+.slide-fade-enter-active {
+	transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+	transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+	{
+	transform: translateX(10px);
+	opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity .4s
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in below version 2.1.8 */
+
+	{
+	opacity: 0
+}
+
+/*信息框*/
+
+.ToolsInfo {
+	    position: fixed;
+    z-index: 102;
+    right: 25px;
+    top: 26px;
+    width: auto;
+    min-width: 34vh;
+    line-height: 45px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #F5F5F5;
+    background: #2f2f2f;
+    border-radius: 3px;
+}
+}
+
+/*通用的可编辑的菜单项  table*/
+
+.PropertiesList {
+	font-size: 12px;
+	color: #777777;
+}
+
+.PropertiesList th {
+	text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid #aaa;
+    padding: 8px 0px;
+    color: #fff;
+    word-break: break-all;
+    opacity: 0.7;
+	font-size: 14px;
+    font-family: sans-serif;
+}
+
+.PropertiesList tr {
+	width: 100%;
+}
+
+.PropertiesList input {
+	background: rgba(255, 65, 65, 0);
+    border: 1px solid #c9c9c9;
+}
+
+.PropertiesList .input-group {
+	margin-bottom: 0px;
+}
+
+.font-size-12 {
+	font-size: 12px;
+}
+
+.font-size-10 {
+	font-size: 10px;
+}
+
+.font-size-14 {
+	font-size: 14px;
+}
+
+.ulInfo li {
+	font-size: 11px;
+	margin-left: -20px;
+}
+/*进度条CSS*/
+
+.Toolscon {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	/*background-color: #00cc06;*/
+	height: 4px;
+	z-index: 999;
+	width: 100%;
+	overflow: hidden;
+	line-height: 3px;
+}
+
+
+/* 手机端的导航球 */
+#SidebarButton{
+	display: none;
+	
+	position: fixed;
+	right: 30px;
+	bottom: 42px;
+	padding: 0px;
+	margin: 0px;
+	height: 46px;
+	width: 46px;
+	border-radius: 46px;
+	background-color: rgb(224, 16, 61);
+
+	text-align: center;
+	color: white;
+	
+	z-index: 102;
+	box-shadow: 0px 0px 8px rgba(54, 52, 52, 0.712);
+
+	text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    vertical-align: middle;
+	direction: ltr;
+	font-family: 'Material Icons';
+}
+
+
+/* 普通用户按钮居中 */
+.GenhomeButton{
+	float: right;
+	height: 100%;
+	line-height: 60px
+}
+
+
+/* 终端 */
+.WebTerminalScreen{
+	overflow-y: auto;
+	max-width: 840px;
+	margin: 0 auto;
+	margin-bottom: 2px;
+}
+/* 日志历史终端 */
+#LogHistoryTerminal{
+	max-height: 79vh;
+	background-color: rgb(0, 0, 0);
+	overflow-y: scroll;
+	color: rgb(207, 207, 207);
+	padding: 4px;
+	font-size: 11px;
+}
+
+#WebTerminalScreenWapper {
+	border-radius: 4px;
+	position: fixed;
+	top: 15%;
+	left:27%;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@media (max-width:800px) {
+	#HeaderInfo {
+		display: none;
+	}
+	.PhoneDisplayNone {
+		display: none;
+		width: 0x;
+		height: 0px;
+		max-width: 0px;
+		max-height: 0px;
+		/* opacity: 0; */
+		position: fixed;
+		top: -100px;
+		left: -100px;
+		z-index: -1;
+	}
+	#SidebarButton{
+		display: block;
+		cursor: pointer;
+	}
+	#Container{
+		margin-left: 0px;
+	}
+	#SideCol{
+		box-shadow: 8px 0px 32px rgba(54, 52, 52, 0.452);
+	}
+	.GenhomeButton{
+		text-align: center;
+		display: block;
+		float: none;
+		height: 100%;
+		line-height: 60px
+	}
+}
+
+
+@media (max-width:790px) {
+	.IpadDisplayNone {
+		display: none;
+		width: 1px;
+		height: 1px;
+		max-width: 1px;
+		max-height: 1px;
+		/* opacity: 0; */
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		z-index: -1;
+	}
+	#login-1 {
+	    margin-left: 5px!important;
+	    margin-right: 5px!important;
+    }
+	/* 终端的手机优化 */
+	#WebTerminalScreenWapper{
+		padding: 0px;
+		margin: 0px;
+		top: 9%;
+        left:0;
+		width: 100%;
+	}
+	.WebTerminalScreen{
+		margin: -10px -12px -9px -12px;
+		background:#000;
+	}
+
+	#LogHistoryTerminal{
+		font-size: 10px;
+		height: 70vh;
+		padding: 2px;
+		margin: -10px -12px -9px -12px;
+		overflow-x: scroll;
+	}
+}

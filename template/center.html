@@ -1,0 +1,299 @@
+<div id='CenterShow' class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-green-600">
+			<a href="javascript:;" class="mdui-typo-title">DevCheck</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu233'}"><i class="mdui-icon material-icons">more_vert</i></a>
+			<!--菜单-->
+		<ul class="mdui-menu" id="menu233">
+			<li class="mdui-menu-item">
+				<a href="javascript:mdui.alert('要改的地方太多了，懒得做...', '哈哈哈');;" class="mdui-ripple">
+				    <i class="mdui-menu-item-icon mdui-icon material-icons">&#xe1ac;</i>暗色主题：关
+				</a>
+			</li>
+			
+			<li class="mdui-divider"></li>
+			
+			<li class="mdui-menu-item">
+				<a href="javascript:mdui.alert('<img src=./common/img/apps/devcheck.png width=64px><br>Version：1.0.0 MCSM 特供版','关于 DevCheck');;" class="mdui-ripple" >
+				    <i class="mdui-menu-item-icon mdui-icon material-icons">&#xe88f;</i>关于
+				</a>
+			</li>
+		</ul>
+		</div>
+		<div class="mdui-tab mdui-color-green-600" mdui-tab id="tab">
+			<a href="#MainINFO" class="mdui-ripple mdui-ripple-white">信息面板</a>
+			<a href="#HardWare" class="mdui-ripple mdui-ripple-white">硬件</a>
+			<a href="#System" class="mdui-ripple mdui-ripple-white">系统</a>
+			<a href="#Network" class="mdui-ripple mdui-ripple-white">网络</a>
+		</div>
+	</div>
+	<div style="margin-top:130px"></div>
+	<div class="mdui-container-fluid">
+	
+	<!--信息面板-->
+		<div class="mdui-row"  id="MainINFO">
+			<div class="mdui-col-md-12">
+				<div class="Panel">
+					<div class="PanelTitle PanelBlack">
+						<!--请不要怀疑这是在欺骗您数据统计日期来自前端，事实上，后端是在每月1日统计至今，所以是一致的-->
+						控制面板 {{ new Date().getMonth()+1 }}月1日 ~ {{ new Date().getMonth()+1 }}月{{ new Date().getDate() }}日基础监控
+					</div>
+					<div class="PanelBody">
+						<div class="mdui-row">
+							<div class="mdui-col-md-2 mdui-col-sm-4">
+								<div class="LogV">{{ loginCounter }} 次</div>
+								<div class="LogK">用户总计登陆次数</div>
+							</div>
+							<div class="mdui-col-md-2 mdui-col-sm-4">
+								<div class="LogV">{{ passwordError }} 次</div>
+								<div class="LogK">错误密码登陆次数</div>
+							</div>
+							<div class="mdui-col-md-2 mdui-col-sm-4">
+								<div class="LogV">{{ banip }} ip</div>
+								<div class="LogK">触发防火墙临时禁封</div>
+							</div>
+							<div class="mdui-col-md-2 mdui-col-sm-4">
+								<div class="LogV">{{ csrfCounter }} 次</div>
+								<div class="LogK">可能的CSRF跨域</div>
+							</div>
+							<div class="mdui-col-md-2 mdui-col-sm-4">
+								<div class="LogV">{{ notPermssionCounter }} 次</div>
+								<div class="LogK">被拒绝的请求</div>
+							</div>
+							<div class="mdui-col-md-2 mdui-col-sm-4">
+								<div class="LogV" v-text="time()"></div>
+								<div class="LogK">系统正常运行的时间</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!--服务器统计-->
+		<div class="mdui-col-md-6">
+			<div class="Panel ">
+				<div class="PanelTitle">服务端监控 </div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-sm-4 ">
+							<div class="LogV">{{ serverCounter }} 个</div>
+							<div class="LogK">服务器总数</div>
+						</div>
+						<div class="mdui-col-sm-4">
+							<div class="LogV">{{ runServerCounter }} 个</div>
+							<div class="LogK">正在运行的服务器总数</div>
+						</div>
+						<div class="mdui-col-sm-4">
+							<div class="LogV">{{serverCounter - runServerCounter }} 个</div>
+							<div class="LogK">未启动的服务器总数</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--用户统计-->
+		<div class="mdui-col-md-6">
+			<div class="Panel ">
+				<div class="PanelTitle">用户管理权限监控 </div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-sm-4 ">
+							<div class="LogV">{{ userCounter }} 个</div>
+							<div class="LogK">用户总数 (包括管理员)</div>
+						</div>
+						<div class="mdui-col-sm-4">
+							<div class="LogV">{{ userOnlineCounter }} 个</div>
+							<div class="LogK">正在线上的用户总数</div>
+						</div>
+						<div class="mdui-col-sm-4">
+							<div class="LogV">{{ WebsocketCounter }} 会话</div>
+							<div class="LogK">Websocket 链接数</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</div>
+		<!--硬件-->
+		<div class="mdui-row"  id="HardWare">
+		<div class="mdui-col-md-6">
+			<div class="Panel ">
+				<div class="PanelTitle">内存</div>
+				<div class="PanelBody">
+					<div class="">
+						<div class="mdui-row">
+							<div class="mdui-col-md-4 mdui-col-sm-4">
+								<div class="LogV">{{ sysTotalmem }} MB</div>
+								<div class="LogK">系统总内存</div>
+							</div>
+							<div class="mdui-col-md-4 mdui-col-sm-4">
+								<div class="LogV">{{ (sysTotalmem - sysFreemem).toFixed(1) }} MB</div>
+								<div class="LogK">系统已使用内存</div>
+							</div>
+							<div class="mdui-col-md-4 mdui-col-sm-4">
+								<div class="LogV">{{ sysFreemem }} MB</div>
+								<div class="LogK">系统剩余内存 </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="mdui-col-md-6">
+			<div class="Panel ">
+				<div class="PanelTitle">控制面板内存</div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-md-4 mdui-col-sm-4">
+							<div class="LogV">{{ rss }} MB</div>
+							<div class="LogK">程序使用的物理内存</div>
+						</div>
+						<div class="mdui-col-md-4 mdui-col-sm-4">
+							<div class="LogV">{{ heapTotal }} MB</div>
+							<div class="LogK">程序内部内存堆大小</div>
+						</div>
+						<div class="mdui-col-md-4 mdui-col-sm-4">
+							<div class="LogV">{{ heapUsed }} MB</div>
+							<div class="LogK">已使用内存堆大小</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+			<div class="mdui-col-md-6">
+				<div class="Panel ">
+					<div class="PanelTitle">屏幕</div>
+					<div class="PanelBody">
+						<div>
+							<p>
+							分辨率：<span class="color-gray"><span id="Resolving">检测中...</span></span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--系统-->
+		<div class="mdui-row"  id="System">
+			<div class="mdui-col-md-6" >
+				<div class="Panel ">
+					<div class="PanelTitle">操作系统</div>
+					<div class="PanelBody">
+						<div id="SystemUp">
+							<p>系统与平台：
+								<span class="color-gray" v-text="system"></span>
+							</p>
+							<p>MCSM 版本：<span class="color-gray" v-text="verisonA"></span></p>
+							<p>版本号：<span class="color-gray" v-text="verisonB"></span></p>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="mdui-col-md-6" >
+				<div class="Panel ">
+					<div class="PanelTitle">进程根目录</div>
+					<div class="PanelBody">
+						<div>
+							<p>面板目录：
+								<span class="color-gray" v-text="root"></span>
+							</p>
+							<br>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!--网络-->
+		<div class="mdui-row"  id="Network">
+			<div class="mdui-col-md-12" >
+				<div class="Panel ">
+					<div class="PanelTitle">连接</div>
+					<div class="PanelBody">
+						<div>
+							<p>
+							连接方式：<span class="color-gray">Websocket</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+		
+<script>
+	function darktheme() {
+		$('body').addClass('mdui-theme-layout-dark');
+	}
+	$(function() {
+		//初始化MDUI控件
+		mdui.mutation()
+	});
+	
+	//创建
+	MI.rListener('onload', function () {
+	
+		//获取分辨率
+		$('#Resolving').replaceWith(window.screen.width + ' x ' + window.screen.height);
+	
+		//更改颜色
+		$('#Header').css('background-image', 'linear-gradient(rgb(0, 110, 5) 10%, rgb(67, 160, 71) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		
+		// 定义页面地址
+		TOOLS.definePage('template/center', 'center/show', null);
+
+		PAGE.time = function (value) {
+			return function () {
+				var theTime = parseInt(Math.floor(this.uptime)); // 秒
+				var theTime1 = 0; // 分
+				var theTime2 = 0; // 小时
+				if (theTime > 60) {
+					theTime1 = parseInt(theTime / 60);
+					theTime = parseInt(theTime % 60);
+					if (theTime1 > 60) {
+						theTime2 = parseInt(theTime1 / 60);
+						theTime1 = parseInt(theTime1 % 60);
+					}
+				}
+				var result = "";
+				if (theTime1 > 0) {
+					result = "" + parseInt(theTime1) + "分";
+				}
+				if (theTime2 > 0) {
+					result = "" + parseInt(theTime2) + "时" + result;
+				}
+				return result;
+			}
+		}
+
+		VIEW_MODEL.newVue('centerShow', {
+			el: '#CenterShow',
+			methods: {
+				time: PAGE.time()
+			}
+		});
+
+		PAGE.time = setInterval(function () {
+			WS.sendMsg('center/show', '');
+		}, 2100);
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		clearInterval(PAGE.time);
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12, 0) 100%)');	
+			
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

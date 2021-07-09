@@ -1,0 +1,90 @@
+<div class="OneContainer mdui-typo">
+	<div class="Panel">
+		<div class="PanelTitle">外置服务器动态贴图系统</div>
+		<div class="PanelBody">
+			<div class="mdui-row">
+				<div class="mdui-col-md-12">
+					    <form id="form">
+				    		<div class="mdui-col-sm-6">	
+			    				<div class="mdui-textfield">
+                                      <label class="mdui-textfield-label">服务器名称</label>
+                                      <input class="mdui-textfield-input" type="text" name="name" id="name"/>
+                                </div>
+	    					</div>
+		    				<div class="mdui-col-sm-6">	
+			    				<div class="mdui-textfield">
+                                      <label class="mdui-textfield-label">服务器IP [可在后面加 :端口]</label>
+                                      <input class="mdui-textfield-input" type="text" name="host" id="host" placeholder="请勿填写内网ip！！！"/>
+                                </div>
+    						</div>
+						</form>
+				</div>
+				<div class="mdui-col-md-12">
+					<div class="mdui-textfield">
+                        <label class="mdui-textfield-label">第一行motd </label>
+                        <textarea class="mdui-textfield-input" type="text" id="motd1"/>
+						<P>[ 可选，如果无法显示motd就填这里 ]</P>
+                    </div>	
+				</div>
+				<div class="mdui-col-md-12">
+					<div class="mdui-textfield">
+                        <label class="mdui-textfield-label">第二行motd </label>
+                        <textarea class="mdui-textfield-input" type="text" id="motd2"/>
+						<P>[ 可选，如果无法显示motd就填这里 ]</P>
+                    </div>
+				</div>
+				<div class="mdui-col-md-12">
+					<div class="mdui-textfield">
+                        <label class="mdui-textfield-label">第二行motd </label>
+                        <textarea class="mdui-textfield-input" type="text" id="motd3"/>
+						<P>[ 可选，如果无法显示motd就填这里 ]</P>
+                    </div>
+				</div>
+			</div>
+			<div class="mdui-row">
+				<div class="mdui-col-lg-12">
+					<p>您可以在这里测试服务器动态贴图：<br><img id="serverimage"></p>
+					<p>警告：该功能需要联网，而且 ip 必须使用<span style="color:#ff5454">外网ip</span>！<span style="color:#ff0d0d">严禁填写</span> 127.0.0.1 或者 192.168.1.x 之类的内网ip，否则无法获取！默认使用 雫 API 进行获取，服务器在香港，加载可能比较慢。如果无法显示图片说明服务器维护！</p>
+					<div class="Line"></div>
+					<div class="PanelItemMuem">
+						<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-a400 "  id="go"><i class="mdui-icon material-icons">&#xe569;</i> 测试</button>
+					    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-grey-400" onclick="RES.redirectPage('./template/component/console.html', 'server/console', MCSERVER.listenServername);">
+							    <span class="mdui-icon material-icons" >chevron_left</span>
+							    	返回
+						</button>
+						
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+ $(function(){
+  
+  $("#go").click(function(){
+	mdui.snackbar({
+    message: '测试中，请稍后...',
+    position: 'top'
+	});
+	var url = 'https://api.imlazy.ink/mcapi/?type=image&name=' + $('#name').val() + '&host=' + $('#host').val() + '&getmotd=' + $('#motd1').val() + "%0a" +$('#motd2').val() + "%0a" + $('#motd3').val();
+	$('#serverimage').attr('src', url);
+	
+  });
+
+ });
+</script>
+<script>
+	MI.rListener('onload', function () {
+		$('#name').val(MCSERVER.listenServername);
+		// 定义页面地址
+		TOOLS.definePage('template/component/server_Image', 'genuser/home', '');
+		
+		document.title="服务器状态贴图 - MCSM 管理面板";
+	});
+
+	MI.rListener('onend', function () { 
+	
+	});
+</script>

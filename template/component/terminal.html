@@ -1,0 +1,172 @@
+<script>
+	   $(document).ready(function(){
+			mdui.mutation()
+            //console.log('数据监控中心页面MDUI组件已加载完毕');
+        });
+		document.title="命令行终端 - MCSM 管理面板";
+</script>
+<div id='Terminal'>
+	<div class="mdui-row" style="position: absolute;right: -10px;">
+		<div class="mdui-col-sm-12 PanelItemB">
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-pink-400 mdui-ripple"
+				v-on:click="RES.redirectPage('./template/component/console.html', 'server/console', MCSERVER.listenServername);" style="width:80px">
+				<i class="mdui-icon material-icons">&#xe5c4;</i> 控制台
+			</button><br>
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-red-500 mdui-ripple" v-if="MCSERVER.username.substr(0, 1)=='#'"
+				v-on:click="RES.redirectPage('./template/server.html', 'server/view', '');">
+				<i class="mdui-icon material-icons">&#xe1db;</i> 实例
+			</button><br>
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-lime-a200 mdui-ripple" v-on:click="loadHistory()">
+				<i class="mdui-icon material-icons">&#xe8b3;</i> 历史
+			</button><br>
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-green-600 mdui-ripple PhoneDisplayNone" v-on:click="goBttom()">
+				<i class="mdui-icon material-icons PhoneDisplayNone">&#xe258;</i> 底部
+			</button><br>
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-teal mdui-ripple" v-on:click="clearConsole()">
+				<i class="mdui-icon material-icons">&#xe239;</i> 清屏
+			</button><br>
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-blue-600 mdui-ripple" v-on:click="stopServer()">
+				<i class="mdui-icon material-icons">&#xe14c;</i> 关闭
+			</button><br>
+			<button class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-deep-purple-a200 mdui-ripple" v-on:click="toOpenServer()">
+				<i class="mdui-icon material-icons PhoneDisplayNone">&#xe566;</i> 开启
+			</button>
+		</div>
+	</div>
+	<div id="TerminalMinecraft" contenteditable="false" style="height:89vh">
+		<br />
+		<span style='color:#03ea0a;'>[ SYSTEM ]</span> 正在监听服务端日志输出.
+		<br />
+	</div>
+	<div class="" style="border-top: 1px solid #585858;">
+		<input id='TerminalCommand' @keyup.up="toCommandhi(1)" @keyup.down="toCommandhi(-1)" @keyup.enter="toCommand"
+			v-model="command" type="text" class="TerminalCommand"
+			placeholder="[命令输入框] 按下 ↑ 或 ↓ 可以查看本地命令记录,输入 help 或 ? 可以查看帮助信息,回车执行命令." aria-describedby="sizing-addon3"
+			autocomplete="off">
+	</div>
+</div>
+</div>
+<script>
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		TOOLS.definePage('template/component/terminal', 'server/console', MCSERVER.listenServername);
+
+		PAGE.nowPage = 0; //当前最低页
+		PAGE.serverName = MCSERVER.listenServername;
+		PAGE.methods = 1;
+
+		//容器布局改变
+		$('#MainContainer').css('background-color', 'rgb(60,60,60)');
+		$('#ConsoleMain').css('max-width', '999999px');
+		$('#ConsoleMain').css('padding-left', '20px');
+
+		WS.sendMsg('server/console/ws', PAGE.serverName);
+
+		//PAGE.TerminalMinecraft = $('#TerminalMinecraft');
+		//PAGE.TerminalMinecraft.css('height', (document.body.clientHeight - 55) + 'px')
+
+		PAGE.tmp_onresize = function () {
+			//$('#TerminalMinecraft').css('height', (document.body.clientHeight - 45) + 'px');
+		};
+		MI.listener('resize', PAGE.tmp_onresize);
+
+		// 默认请求一段历史
+		WS.sendMsg('server/console/history', JSON.stringify({
+			serverName: PAGE.serverName
+		}));
+
+		VIEW_MODEL.newVue('Terminal', {
+			el: '#Terminal',
+			methods: {
+				goBttom: function () {
+					var ele = document.getElementById('TerminalMinecraft');
+					ele.scrollTop = ele.scrollHeight;
+				},
+				loadHistory: function () {
+					WS.sendMsg('server/console/history', JSON.stringify({
+						serverName: PAGE.serverName
+					}));
+				},
+				toOpenServer: function () {
+					WS.sendMsg('server/console/open', PAGE.serverName);
+				},
+				toCommand: function (parCommand) {
+					if (parCommand && typeof (parCommand) == 'string') this.command = parCommand;
+					var data = {
+						command: this.command,
+						serverName: PAGE.serverName
+					};
+					if (this.command.length >= 1 || typeof (parCommand) == 'string') {
+						//压入命令栈 并 发送
+						this.commandList.unshift(this.command);
+						WS.sendMsg('server/console/command', JSON.stringify(data));
+					}
+					this.command = '';
+					this.commandListPrint = 0;
+
+				},
+				toCommandhi: function (fl) {
+					if (this.commandListPrint > (this.commandList.length - 1)) this.commandListPrint = this.commandList.length -
+						1;
+					if (this.commandListPrint < 0) this.commandListPrint = 0;
+					console.log('commandListPrint', this.commandListPrint, 'vlaue', this.commandList[this.commandListPrint]);
+					if (fl == 1) { //up
+						this.command = this.commandList[this.commandListPrint];
+						this.commandListPrint++;
+					} else { //down
+						this.command = this.commandList[this.commandListPrint];
+						this.commandListPrint--;
+					}
+					return false;
+				},
+				clearConsole: function () {
+					var ele = document.getElementById('TerminalMinecraft');
+					ele.innerHTML = ["<br /><span style='color:#03ea0a;'>", "[ 控制面板 ]:", "</span>",
+						"控制面板内容已经清空，您所查看的历史记录位置依然保留。",
+						"<br>",
+						"<span style='color:#03ea0a;'>", "[ 控制面板 ]:", "</span>",
+						"如果您在此页面遇到卡顿，内存高等现象，请使用此功能来优化。<br />"
+					].join(" ");
+				},
+				stopServer: function () {
+					this.toCommand('__stop__');
+				}
+			},
+			data: {
+				allowedStart: true,
+				command: '',
+				commandList: [],
+				commandListPrint: 0,
+				historyIf: false
+
+			}
+		});
+		
+		/*啊这~，里是写的很烂的硬核翻译*/
+		var str = document.getElementById("TerminalMinecraft").innerHTML; 
+		var txt = str.replace(/Loading&nbsp;libraries,&nbsp;please&nbsp;wait.../g, "<span style='color:#009fef;'>加载支持库中，请等待...</span>")
+		.replace(/Starting&nbsp;minecraft&nbsp;server&nbsp;version/g, "<span style='color:#03ea0a;'>当前的服务器版本为：</span>")
+		.replace(/Loading properties/gm, "<span style='color:#03ea0a;'>正在加载服务器配置文件</span>")
+		.replace(/Default game type:/gm, "<span color:#ffa700;'>默认游戏模式：</span>")
+		.replace(/Starting Minecraft server on/gm, "<span color:#ffa700;'>服务器连接地址：</span>")
+		document.getElementById("TerminalMinecraft").innerHTML = txt;
+		
+		PAGE.mainC = document.getElementById('TerminalMinecraft');
+
+		$("#TerminalCommand").focus();
+	});
+
+	MI.rListener('onend', function () {
+		WS.sendMsg('server/console/remove', '');
+		PAGE.mainC.innerHTML = "";
+		PAGE.mainC.onscroll = function () { };
+
+		MI.onDestroy('resize', PAGE.tmp_onresize);
+
+		//布局恢复
+		$('#MainContainer').removeAttr('style');
+		$('#ConsoleMain').removeAttr('style');
+		document.title="MCSM 管理面板";
+
+	})
+</script>

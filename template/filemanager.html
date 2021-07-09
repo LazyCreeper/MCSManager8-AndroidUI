@@ -1,0 +1,65 @@
+<div id="QuickOperation" class="OneContainer">
+<div class="mdui-video-container filephone">
+            <iframe src="../fs_auth/auth_master/pwd" width=530 height=498 frameborder=0 allowfullscreen name="1"></iframe>
+        </div>
+</div>
+
+<style>
+	.mbuttonWhite {
+		display: inline-block;
+		/* margin-bottom: 2px; */
+		color: #292929;
+		border: 1px solid #797676;
+		padding: 2px 2px;
+		text-align: center;
+		margin-right: 4px;
+		font-size: 11px;
+		border-radius: 2px;
+	}
+
+	.PagePanelItemInfoTextCenter {
+		margin: 0px;
+		text-align: center;
+	}
+
+	.AppInlineBlockList:hover {
+		box-shadow: 0 0 15px #4b9642;
+		cursor: pointer;
+		transition: all 0.5s;
+	}
+	@media (max-width:790px) {
+	    .filephone {
+		    height: 56vh;
+		}
+	}
+</style>
+
+
+<!--js-->
+<script>
+document.title="文件管理 - MCSM 管理面板";
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		TOOLS.definePage('template/filemanager', 'genuser/home', null);
+
+		// MCSERVER.colmSet(false);
+		VIEW_MODEL.newVue('GenHome', {
+			el: '#QuickOperation',
+			methods: {
+				toOnlineFs: function (serverName) {
+					// MCSERVER.listenServername = serverName;
+					var path = MCSERVER.URL("../fs_auth/auth/" + encodeURIComponent(serverName));
+					//window.open(path);
+					window.parent.frames["1"].location.href=(path);
+				},
+				toServersDir: function () {
+					var path = MCSERVER.URL("../fs_auth/auth_master/pwd");
+					window.parent.frames["1"].location.href=(path);
+					//window.open(path);
+				}
+			}
+		});
+	})
+
+	MI.rListener('onend', function () { })
+</script>

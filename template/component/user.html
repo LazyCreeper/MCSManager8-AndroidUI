@@ -1,0 +1,128 @@
+<div id='OneUserView' class="OneContainer">
+	<div class="Panel PanelBlack">
+		<div class="PanelTitle">用户 {{ username }} 信息与配置</div>
+		<div class="PanelBody">
+			<div class="mdui-row">
+				<div class="mdui-col-sm-3">
+					<p>基础展示信息</p>
+					<div class="mdui-chip" mdui-tooltip="{content: '创建时间'}">
+					    <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">access_time</i></span>
+                        <span class="mdui-chip-title">{{ createDate }}</span>
+                    </div><br><br>
+					
+					<div class="mdui-chip" mdui-tooltip="{content: '拥有的服务器'}">
+					    <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">storage</i></span>
+                        <span class="mdui-chip-title">拥有的服务器</span>
+						<span class="mdui-chip-icon">{{ ServerLen }}</span>
+                    </div><br><br>
+					 
+					<div class="mdui-chip" mdui-tooltip="{content: '最后上线'}">
+					    <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">update</i></span>
+                        <span class="mdui-chip-title">{{ lastDate }}</span>
+                    </div><br><br>
+					 
+				</div>
+				<div class="mdui-col-sm-9">
+					<div class="mdui-row">
+						<div class="mdui-col-sm-5">	
+							<div class="mdui-textfield">
+                                  <label class="mdui-textfield-label">用户名</label>
+                                  <input class="mdui-textfield-input" type="text" v-model="username"/>
+								 
+                                </div><p>用户名 [字母 数字 下划线] (6~18位)</p>
+						</div>
+						<div class="mdui-col-sm-7">	
+							<div class="mdui-textfield">
+                                  <label class="mdui-textfield-label">账号密码</label>
+                                  <input class="mdui-textfield-input" type="text" v-model="password"/>
+								  
+                            </div>
+							<p>密码 [字母 数字 下划线] (6~18位) 注意* 显示 “未更改” 代表不改动本身密码</p>
+						</div>
+					</div>
+					
+				 
+					<div class="mdui-textfield">
+                        <label class="mdui-textfield-label">准许的服务器，输入服务器名字，分别以空格分割</label>
+                        <input class="mdui-textfield-input" type="text" v-model="allowedServer"/>
+						
+						<p>默认空，列如 ServerNameA ServerNameB ServerNameC  |  注意，如果是以#开头的最高权限账号，则可以无条件访问任何服务器</p>
+                     </div>
+					 
+				</div>
+			</div>
+			<div class="mdui-row">
+				<div class="mdui-col-lg-12">
+					<br>
+					<br>
+					<p>您可以重新配置这个用户</p>
+					<p>警告:修改用户名时请务必减少此类操作，如果当前用户在线的话，很有可能会导致意外的错误，因为用户已经使用原用户名登陆，请确保用户不在线的情况下修改用户名.</p>
+					<div class="Line"></div>
+					<div class="PanelItemMuem">
+					    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-grey-200" v-on:click="toBack()">
+							    <span class="mdui-icon material-icons" >chevron_left</span>
+							    	返回
+						 </button>
+						<button class="mdui-btn mdui-btn-raised mdui-ripple bg-green"  v-on:click="toUpdate()">
+							    <span class="mdui-icon material-icons" >edit</span>
+							    更新配置
+						 </button>
+						<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-red-a200" v-on:click="toDeleteUser()">
+							    <span class="mdui-icon material-icons" >delete</span>
+							     删除此用户
+						 </button>
+						 <p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	MI.rListener('onload', function () {
+		VIEW_MODEL.newVue('OneUserView', {
+			el: '#OneUserView',
+			data: {
+				ServerLen: 0,
+				password: '',
+				oldUsername: ''
+			},
+			methods: {
+				toUpdate: function () {
+					var allowedServers = this.allowedServer.trim().split(' ');
+					var obj = {
+						newUsername: this.username,
+						newPassword: this.password,
+						allowedServer: allowedServers,
+						username: this.oldUsername
+					}
+					WS.sendMsg('userset/upinfo', JSON.stringify(obj));
+					//返回到上层
+					RES.redirectPage('./template/userset.html', 'userset/update');
+				},
+				toDeleteUser: function (itemUsername) {
+					var obj = {
+						username: this.oldUsername
+					};
+					mdui.alert('您真的打算删除这个这个用户吗?','警告', function(){
+                       WS.sendMsg('userset/delete', JSON.stringify(obj), function () {
+						RES.redirectPage('./template/userset.html', 'userset/update');
+					});
+                });
+				},
+				toBack: function () {
+					//返回到上层
+					RES.redirectPage('./template/userset.html', 'userset/update');
+				}
+			},
+
+		});
+		var viewModel = VIEW_MODEL['OneUserView'];
+		viewModel.oldUsername = viewModel.username + " ";
+		viewModel.ServerLen = viewModel.allowedServer.length;
+		viewModel.allowedServer = viewModel.allowedServer.toString().replace(/,/gim, ' ');
+	});
+
+	MI.rListener('onend', function () { });
+</script>

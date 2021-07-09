@@ -1,0 +1,72 @@
+<div id='' class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-green-600">
+			<a href="javascript:;" class="mdui-typo-title">DevCheck</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu233'}"><i class="mdui-icon material-icons">more_vert</i></a>
+			<!--菜单-->
+			<ul class="mdui-menu" id="menu233">
+				<li class="mdui-menu-item">
+					<a href="javascript:;" class="mdui-ripple">
+						<i class="mdui-menu-item-icon mdui-icon material-icons">&#xe1ac;</i>
+					</a>
+				</li>
+			
+				<li class="mdui-divider"></li>
+			
+				<li class="mdui-menu-item">
+					<a href="javascript:mdui.alert('<img src=./common/img/apps/devcheck.png width=64px><br>Version：1.0.0 MCSM 特供版','关于 DevCheck');;" class="mdui-ripple" >
+						<i class="mdui-menu-item-icon mdui-icon material-icons">&#xe88f;</i>关于
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="mdui-tab mdui-color-green-600" mdui-tab id="tab">
+			<a href="#" class="mdui-ripple mdui-ripple-white"></a>
+			<a href="#" class="mdui-ripple mdui-ripple-white"></a>
+			<a href="#" class="mdui-ripple mdui-ripple-white"></a>
+			<a href="#" class="mdui-ripple mdui-ripple-white"></a>
+		</div>
+	</div>
+	<div style="margin-top:130px"></div>
+	<div class="mdui-container-fluid">
+		<!--信息面板-->
+		<div class="mdui-row"  id="MainINFO">
+			<div class="mdui-col-md-12">
+				<div class="Panel">
+					<div class="PanelTitle PanelBlack">
+						
+					</div>
+					<div class="PanelBody">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+		
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(58, 140, 61, 1) 10%, rgb(58, 140, 61) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/', 'genuser/home', null);
+
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

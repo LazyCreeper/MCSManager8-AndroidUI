@@ -1,0 +1,101 @@
+<div class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">安全</a>
+		</div>
+	</div>
+	<div style="margin-top:60px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row">
+			<div class="mdui-col-md-12">
+				<div class="PanelBody">
+					<div class="mdui-list">
+						<p class="mdui-text-color-teal-500">设备安全性</p>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">屏幕锁定</div>
+								<div class="mdui-list-item-text">无</div>
+							</div>
+						</li>
+						<p class="mdui-text-color-teal-500">加密</p>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">加密平板电脑</div>
+							</div>
+						</li>
+						<p class="mdui-text-color-teal-500">密码</p>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">更改密码</div>
+								
+							</div>
+							<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-pink-500">&#xe5cc;</i>
+						</li>
+						<p class="mdui-text-color-teal-500">凭据存储</p>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">存储类型</div>
+								<div class="mdui-list-item-text">硬件支持</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">信任的凭据</div>
+								<div class="mdui-list-item-text">显示信任的CA证书</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">用户凭据</div>
+								<div class="mdui-list-item-text">查看和修改储存的凭据</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple" onclick="mdui.alert('无法访问SD卡','错误')">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">从SD卡安装</div>
+								<div class="mdui-list-item-text">从SD卡安装证书</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple" onclick="mdui.alert('清除成功')">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">清除凭据</div>
+								<div class="mdui-list-item-text">删除所有证书</div>
+							</div>
+						</li>
+						<hr>
+						<div style="margin-bottom:70px"></div>
+					</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/security', null);
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

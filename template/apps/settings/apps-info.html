@@ -1,0 +1,201 @@
+<div class="mdui-container-fluid" id='ServerPanel'>
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/apps.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">应用信息</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu233'}"><i class="mdui-icon material-icons">&#xe5d4;</i></a>
+			<!--菜单-->
+			<ul class="mdui-menu" id="menu233">
+				<li class="mdui-menu-item">
+					<a href="javascript:;" class="mdui-ripple" v-on:click="toDeleteServer(name)">
+						为所有用户卸载
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div style="margin-top:70px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row" >
+			<div class="mdui-col-md-12">
+				<div class="PanelBody">
+					<div style="margin-left: auto;margin-right: auto;max-width: 50%;">
+						<li class="mdui-list-item mdui-ripple" >
+							<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1db;</i>
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">{{ name }}</div>
+								<div class="mdui-list-item-text">com.mcsm.{{ jarName }}</div>
+							</div>
+						
+						</li>
+					<button class="mdui-btn mdui-color-grey-400 mdui-btn-raised mdui-ripple" v-on:click="toDeleteServer(name)">卸载</button>
+					<button class="mdui-btn mdui-color-grey-400 mdui-btn-raised mdui-ripple" v-on:click="toCommand('__killserver__')">强行停止</button>
+					</div>
+					<div class="mdui-list" style="margin-bottom: 70px;">
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">安装日期</div>
+								<div class="mdui-list-item-text">{{ createDate }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">最后运行</div>
+								<div class="mdui-list-item-text">{{ lastDate }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">权限
+								 </div>
+								<div class="mdui-list-item-text">无</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">通知
+								</div>
+								<div class="mdui-list-item-text">开</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">内存
+								</div>
+								<div class="mdui-list-item-text">最大内存堆：{{ Xmx }} | 初始内存堆：{{ Xms }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">安装路径
+								 </div>
+								<div class="mdui-list-item-text">{{ cwd }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">运行环境
+								 </div>
+								<div class="mdui-list-item-text">{{ java }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">附加启动参数
+								 </div>
+								<div class="mdui-list-item-text">{{ addCmd }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">自定义启动参数
+								 </div>
+								<div class="mdui-list-item-text">{{ highCommande }}</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">到期时间
+								 </div>
+								<div class="mdui-list-item-text">{{ timeLimitDate }}</div>
+							</div>
+						</li>
+						<hr>
+					</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script>
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		//TOOLS.definePage('template/apps/settings/apps-info', 'server/view', null);
+	
+		VIEW_MODEL.newVue('ServerPanel', {
+			el: '#ServerPanel',
+			data: {
+				oldServerName: '',
+				isHighCommande: false
+			},
+			methods: {
+				toDeleteServer: function (name) {
+					mdui.confirm('要卸载此应用吗？\n注意: 卸载应用并不会删除应用目录和文件,只会从控制面板删除！', name, function(inst){
+						WS.sendMsg('server/delete', name);
+							RES.redirectPage('./template/apps/settings/apps.html', 'server/view', null);
+					});	
+				},
+				toCommand: function (parCommand) {
+					if (parCommand && typeof (parCommand) == 'string') this.command = parCommand;
+					var data = {
+						command: this.command,
+						serverName: MCSERVER.listenServername
+					};
+					if (this.command.length >= 1 || typeof (parCommand) == 'string') {
+						mdui.confirm('强行停止某个应用可能会导致其出现异常', '要强行停止吗？', function(inst){
+							WS.sendMsg('server/console/command', JSON.stringify(data));
+							PAGE.refresh();
+						});	
+					}
+					this.command = '';
+				},
+				toRebulider: function () {
+					var addCmdList = this.addCmd.split(' ');
+					if (!TOOLS.isStdText(this.name)) {
+						TOOLS.pushMsgWindow("服务器名字不合法！仅限字母数字下划线！");
+						return;
+					}
+					if (this.timeLimitDate != '' && !TOOLS.isSmallDate(this.timeLimitDate)) {
+						TOOLS.pushMsgWindow("您输入的时间期限格式不正确，请检查再尝试。");
+						return;
+					}
+
+					var obj = {
+						addCmd: addCmdList,
+						serverName: this.name,
+						jarName: this.jarName,
+						cwd: this.cwd,
+						Xmx: this.Xmx,
+						Xms: this.Xms,
+						java: this.java,
+						ie: this.ie,
+						oe: this.oe,
+						highCommande: this.highCommande,
+						oldServerName: this.oldServerName,
+						timeLimitDate: this.timeLimitDate
+					};
+					WS.sendMsg('server/rebulider', JSON.stringify(obj));
+					setTimeout(function () {
+						RES.redirectPage('./template/server.html', 'server/view');
+					}, 100);
+				}
+			},
+			watch: {
+				highCommande: function (newQuestion) {
+					if (this.highCommande) {
+						this.isHighCommande = true;
+					} else {
+						this.isHighCommande = false;
+					}
+				}
+			}
+		});
+		VIEW_MODEL['ServerPanel'].addCmd = VIEW_MODEL['ServerPanel'].addCmd.toString().replace(/,/gim, ' ');
+		VIEW_MODEL[
+			'ServerPanel'].oldServerName = VIEW_MODEL['ServerPanel'].name + "";
+
+	});
+
+	MI.rListener('onend', function () { });
+</script>

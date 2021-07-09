@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="zh-CN" />
+	<meta name="renderer" content="webkit" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no" />
+
+	<title>MCSM 管理面板</title>
+	<link href="./common/css/mdui.css" rel="stylesheet">
+	<link href="common/css/action.css" rel="stylesheet" />
+	<link href="./common/css/common.css" rel="stylesheet">
+	<link href="./common/css/block.css" rel="stylesheet">
+	<link href="common/css/unit.css" rel="stylesheet" />
+
+	<link href="common/xterm.css" rel="stylesheet" />
+	<script type="text/javascript" src="common/xterm.js"></script>
+
+	<link href="./favicon.ico" rel="shortcut icon">
+	<!--[if lt IE 9]>
+      		<div id='Not_' class="show-ui" style="height: 40px;background-color: rgb(221,79,67);text-align:center;line-height: 40px;color: white;">
+            	<b>无法访问! 您的浏览器版本过低或是兼容模式,请使用最新/更高版本的浏览器: IE10+ chrome FireFox 等，如果是国内浏览器请打开极速浏览模式（webkit内核）。</b>
+        	</div>
+   		<![endif]-->
+</head>
+<body class="mdui-bottom-nav-fixed">
+      <div id='Header' class="">
+		<!--<div id='MasterLogo' class="HeaderItem mdui-ripple mdui-ripple-white" onclick="MCSERVER.colmDo()" style="cursor: pointer;    width: 55px;">
+			<svg t="1578819418670" class="icon" style="width: 20px; height: 20px;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1569"><path d="M64 187.4l367.2-50.6v354.8H64V187.4z m0 649.2l367.2 50.6V536.8H64v299.8z m407.6 56L960 960V536.8H471.6v355.8z m0-761.2v360.2H960V64L471.6 131.4z" fill="#ffffff" p-id="1570"></path></svg>
+		</div>
+		<div id="HeaderInfo" class="HeaderTitle"></div>-->
+		<div class="HeaderL">
+			<div><span id="time">00:00</span></div>
+		</div>
+		<div class="HeaderR">
+		    <div class=" mdui-ripple mdui-ripple-white twt" onclick="minwt()" mdui-tooltip="{content: '打开终端'}" style="display:none">
+				<i class="mdui-icon material-icons">&#xe30d;</i>
+			</div>
+			<div class=" mdui-ripple mdui-ripple-white" onclick="PAGE.refresh()" mdui-tooltip="{content: '刷新'}">
+				<i class="mdui-icon material-icons" >cached</i>
+			</div>
+			<div class="mdui-ripple mdui-ripple-white" v-bind:style="{ color: tcolor}">
+				<i id='websocket' class="mdui-icon material-icons" v-text="status">perm_scan_wifi</i>
+			</div>
+			<div class="mdui-ripple mdui-ripple-white">
+				<i class="mdui-icon material-icons">&#xe1a3;</i>
+			</div>
+			
+			<!--<div id='TitleUser' class=" mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '用户名'}">
+				<span v-if="is">
+					<i class="mdui-icon material-icons">&#xe7fd;</i>
+					{{ MCSERVER.username }}
+				</span>
+			</div>
+			<div id='loginOut' v-on:click="loginOut()" class="mdui-ripple mdui-ripple-white">
+				<span class="mdui-icon material-icons">directions_walk</span>
+				退出
+			</div>-->
+		</div>
+	</div>
+	<div id='MainContainer'>
+		<div id='SideCol'>
+			<div id="SideColMenu">
+				<div id='SideColMenuInfo'>
+					正在后台运行的应用
+					<br>
+					<!--<div id='websocket2'>
+						<div v-if="is">
+							<span class="color-green">在线: </span>{{ MCSERVER.username }}</div>
+						<div v-else>offline (离线)</div>
+					</div>-->
+				</div>
+				<div id='SideColFor'>
+					<!--如果您想更改菜单名或功能，请查看 common/js/meum.js 文件-->
+					<a href="javascript:void(0);" v-for="item of items" :class="{ MeumSelect: item.select }"
+						v-on:click="onRedirect(item.link,item.api,item)" class="mdui-ripple mdui-ripple-white">
+						<i class="mdui-icon material-icons " v-text="item.class" aria-hidden="true"></i>
+						<span v-text="item.name"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div id="Container">
+			
+			<div id="ConsoleMain">
+				<!--可变动内嵌html区域开始-->
+
+				<!--默认的单页应用模板，这个是用于第一次加载时使用-->
+				<div class="OneContainer">
+					<div class="mdui-row">
+						<div class="mdui-col-xs-3" style="
+    margin-left: 36%;
+    margin-top: 18%;
+	text-align:center">          
+                            <img src="./common/load.gif">
+							<h3 id="_TMP_LOADING">正在加载 ..</h3>
+							<div class="mdui-progress">
+                                <div class="mdui-progress-indeterminate"></div>
+                            </div>
+							<script>
+								(function () {
+									var count = 0;
+									var www = document.getElementById('_TMP_LOADING');
+									var masks = setInterval(function () {
+										www.innerHTML = www.innerHTML + '.';
+										count++;
+										if (count > 10) clearInterval(masks);
+									}, 1000);
+								})();
+							</script>
+						</div>
+					</div>
+				</div>
+				<!--可变动内嵌html区域结束-->
+			</div>
+			</div>  
+			
+			<!--底部导航栏-->
+		<div class="mdui-bottom-nav">
+			<a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active" onclick="RES.redirectPage('./template/homepage.html', null);">
+				<i class="mdui-icon material-icons">&#xe3c8;</i>
+			</a>
+			<a href="javascript:;" class="mdui-ripple" onclick="RES.redirectPage('./template/homepage.html', null);">
+				<i class="mdui-icon material-icons">&#xe40c;</i>
+			</a>
+			<a href="javascript:;" class="mdui-ripple" onclick="MCSERVER.colmDo()">
+				<i class="mdui-icon material-icons">&#xe3c1;</i>
+			</a>
+		</div>
+		
+	</div>
+	<!--信息框HTML-->
+	<div id='ToolsInfo'>
+		<transition name="fade">
+			<div class="ToolsInfo tools-info text-center show-ui" v-if='show'>
+			    <span style="margin: 0 15px 0 15px;"  v-text="msg"></span>
+			</div>
+        </transition>
+	</div>
+	
+    <div id='ShowMenu' onclick="MCSERVER.colmDo()">
+		<h4></h4>
+	</div>
+	
+	<!--页面加载进度条-->
+	<div class="Toolscon" id="ToolsPageLoading">
+		<div class="progress" style="height: 4px;line-height: 4px;background-color: inherit;border: 0px;">
+			<div id="ToolsLoading" class="progress-bar progress-bar-success progress-bar-striped active"
+				style="width: 0%;height: 4px;">
+			</div>
+		</div>
+	</div>
+
+	<!-- 弹窗HTML -->
+	<div class="PopWin">
+		<div class="Panel">
+			<div id="PopWinTitle" class="PanelTitle">信息框</div>
+			<div class="PanelBody">
+				<div id="PopWinContext">
+					<!-- 动态 HTML -->
+					<p>正在加载信息框,请稍等...</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 黑屏 HTML -->
+	<div id="balckWarp" onclick="TOOLS.popWindClose(null);"></div>
+
+	<!--JavaScript 文件引用，顺序不能乱，大部分 js 都是依赖于前 js 的-->
+	<script type="text/javascript" src="common/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="./common/js/mdui.js"></script>
+	<!--Vue -->
+	<script type="text/javascript" src="common/vue/vue.min.js"></script>
+	<!--公用的js方法，公用的函数，类，模式-->
+	<!--						   全局变量 MI(中介者) MS(保留) MCSERVER(全局寄生器)-->
+	<script type="text/javascript" src="common/js/common.js"></script>
+	<!--URL 处理函数				MCSERVER.URL URL 定位器-->
+	<script type="text/javascript" src="common/URL.js"></script>
+	<!--请求类相关方法				 全局变量 RES(请求) PAGE(单页应用临时全局存储变量)-->
+	<script type="text/javascript" src="common/js/response.js"></script>
+	<!--Websocket 封装类			全局变量 WS	-->
+	<script type="text/javascript" src="common/js/websocket.js"></script>
+	<!--工具类						全局变量 TOOLS(工具箱)-->
+	<script type="text/javascript" src="common/js/tools.js"></script>
+	<!--首页菜单获取				 虚拟的后端菜单数据-->
+	<script type="text/javascript" src="common/js/meum.js"></script>
+	<!--echarts 库 				  	统计图-->
+	<script type="text/javascript" src="common/echarts.js"></script>
+	<!--Vue.data 数据模型处理  	  	全局变量 VIEW_MODEL-->
+	<script type="text/javascript" src="common/js/viewmodel.js"></script>
+	<!--图像统计表格封装			 附属于 TOOLS 变量-->
+	<script type="text/javascript" src="common/js/chart.js"></script>
+	<!--CLOSE WEBSOCKET CONNECT-->
+    <script>
+	    mdui.$('#CloseWS').on('click', function(){
+			mdui.dialog({
+				title: '警告',
+				content: '是否断开Websocket的连接？',
+				buttons: [{text: '取消'},{text: '确认',onClick: function(inst){WS.close()}}]
+			});
+		});
+	</script>
+	<!--MOVE-->
+    <script>
+	//获取元素
+var dv = document.getElementById('WebTerminalScreenWapper');
+var x = 0;
+var y = 0;
+var l = 0;
+var t = 0;
+var isDown = false;
+//鼠标按下事件
+dv.onmousedown = function(e) {
+    //获取x坐标和y坐标
+    x = e.clientX;
+    y = e.clientY;
+
+    //获取左部和顶部的偏移量
+    l = dv.offsetLeft;
+    t = dv.offsetTop;
+    //开关打开
+    isDown = true;
+    //设置样式  
+    dv.style.cursor = 'move';
+}
+//鼠标移动
+window.onmousemove = function(e) {
+    if (isDown == false) {
+        return;
+    }
+    //获取x和y
+    var nx = e.clientX;
+    var ny = e.clientY;
+    //计算移动后的左偏移量和顶部的偏移量
+    var nl = nx - (x - l);
+    var nt = ny - (y - t);
+
+    dv.style.left = nl + 'px';
+    dv.style.top = nt + 'px';
+}
+//鼠标抬起事件
+dv.onmouseup = function() {
+    //开关关闭
+    isDown = false;
+    dv.style.cursor = 'default';
+}
+	</script>
+	
+	<!--GET TIME-->
+	<script>
+
+	setInterval(function() {
+      var now = new Date().toLocaleString();
+      var now2 = (new Date()).toLocaleString();
+      $('#time').text(now);
+	  $('#time2').text(now2);
+	}, 1000);
+</script>
+	
+	<script>
+		// 网络加载判断
+		if (!window.$) alert('[文件加载失败] 网络不通畅，请检查您的网络状态！');
+		
+		// // 动态背景色，稍后会继续改变
+		 //$('body').css('background-color', 'rgb(243, 243, 243);');
+
+		MCSERVER.website = {};
+
+		$(function () {
+
+			//事件
+			window.onresize = function () {
+				MI.on('resize', null);
+			}
+			//防止页面后退
+			history.pushState(null, null, document.URL);
+			window.addEventListener('popstate', function () {
+				history.pushState(null, null, document.URL);
+			});
+
+			//一般制约能力的防止被 iframe 嵌入，另外，HTTP返回了 X-Frame-Options: DENY
+			// window.top.location !== window.location && (window.top.location = window.location);  //已弃用
+
+			// echart 路径配置
+			window.require.config({
+				paths: {
+					echarts: './common/echarts-dist'
+				}
+			});
+
+			//抗CSRF攻击
+			//身份验证，令牌获取
+			RES.getToken(function (token) {
+
+				RES.TOKEN = token;
+
+				//初始化 Websocket
+				WS.init(function () {
+
+					//获取菜单
+					WS.sendMsg('menu', '');
+
+					//异步自动获取单页
+
+					//是否登陆
+					if (!MCSERVER.username) {
+						window.location.href = MCSERVER.URL("login");
+						return;
+					}
+
+					// 判断是否需要进行页面转移
+					if (!TOOLS.page(true)) {
+						//判断是否是#权限用户，请放心，后端也会给予判断并不只是前端
+						if (MCSERVER.username.substr(0, 1) == '#') {
+							//RES.redirectPage('./template/center.html', 'center/show', '--- 更新页面 ---');
+							RES.redirectPage('./template/homepage.html', null, '--- 更新页面 ---');
+						} else {
+							RES.redirectPage('./template/gen_home.html', 'genuser/home', '--- 更新页面 ---');
+						}
+					}
+				});
+			});
+
+			//建立 退出按钮 Vue
+			var vueLoginOut = new Vue({
+				el: '#loginOut',
+				methods: {
+					loginOut: function () {
+						RES.ajax({
+							type: 'POST',
+							url: './user/loginout',
+							success: function () {
+							mdui.dialog({
+                            title: '警告',
+                            content: '你真的要退出吗？',
+                            buttons: [
+                             {
+                               text: '取消'
+                             },
+                             {
+                               text: '确认',
+                               onClick: function(inst){
+								mdui.snackbar({
+                                    message: '您已退出，正在跳转...',
+                                    position: 'right-top'
+                                });
+								WS.close();
+								setTimeout(function () {
+									window.location.href = MCSERVER.URL('login');
+								}, 2000);
+                               }
+                             }
+                           ]
+                          });	
+								
+							},
+							error: function () {
+								mdui.snackbar({
+                                    message: '退出失败，请检查你的网络连接.',
+                                    position: 'right-top'
+                                });
+							}
+						});
+					}
+				}
+			});
+
+			//工具信息栏
+			VIEW_MODEL.newVueOnce('ToolsInfo', {
+			    el: '#ToolsInfo',
+				data: {
+					show: false,
+					msg: ''
+				},
+			});
+
+			// 手机端导航球
+			//var SidebarButton = new Vue({
+			//	el: "#SidebarButton",
+			//	data: {
+			//		isExpand: false
+			//	},
+			//	methods: {
+			//		operate: function () {
+			//			MCSERVER.colmSet(!MCSERVER.getColmStatus());
+			//			// TOOLS.blackJumbotron(!this.isExpand)
+			//			this.isExpand = !MCSERVER.getColmStatus();
+			//		}
+			//	}
+			//})
+
+			VIEW_MODEL.COMMON = {};
+
+		});
+	</script>
+	
+</body>
+
+</html>

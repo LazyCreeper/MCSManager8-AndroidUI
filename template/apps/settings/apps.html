@@ -1,0 +1,104 @@
+<script>
+	   $(document).ready(function(){
+			mdui.mutation()
+        });
+</script>
+<div id='ServerList' class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">应用</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<span onclick="mdui.alert('点击即可查看配置','查看信息');" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"><i class="mdui-icon material-icons">&#xe8b8;</i></span>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-menu="{target: '#menu233'}"><i class="mdui-icon material-icons">&#xe5d4;</i></a>
+			<!--菜单-->
+			<ul class="mdui-menu" id="menu233">
+				<li class="mdui-menu-item">
+					<a href="javascript:PAGE.refresh();" class="mdui-ripple">
+						刷新
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div style="margin-top:70px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row" >
+			<div class="mdui-col-md-12">
+				
+				<div class="Panelbody" style="margin-bottom: 70px;">
+					<div class="mdui-list" style="padding-top: 0 8px 0;">
+						
+							<li v-for="item of items"  class="mdui-list-item mdui-ripple" v-on:click="onRedirect('./template/apps/settings/apps-info.html','server/get',item.serverName);" style="border-bottom: 0.5px solid #aaa;">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1db;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title" v-text="item.serverName"></div>
+									<div class="mdui-list-item-text">
+										<span v-if="item.data.run" class="color-green">运行中 </span>
+										<span v-else="item.data.run" class="color-red">已停止 </span>
+									</div>
+								</div>
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-pink-500">&#xe5cc;</i>
+							</li>
+					</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script>
+	MI.rListener('onload', function () {
+	
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/apps', 'server/view', null);
+
+		VIEW_MODEL.newVue('ServerList', {
+			el: '#ServerList',
+			methods: {
+				toConsole: function (serverName) {
+					MCSERVER.listenServername = serverName;
+					RES.redirectPage('./template/component/console.html', 'server/console', serverName);
+				},
+				onRedirect: function (link, api, serverName) {
+					RES.redirectPage(link, api, serverName);
+				},
+				newServer: function () {
+					RES.redirectPage('./template/component/newserver.html', null, '');
+				},
+				newServerx: function () {
+					RES.redirectPage('./template/component/newserverx.html', null, '');
+				},
+				opt_all: function (command) {
+					if (confirm("您真的要执行这个影响所有服务器的操作吗？")) {
+						WS.sendMsg('server/opt_all', command);
+						setTimeout(function () {
+							PAGE.refresh();
+						}, 2000);
+					}
+				},
+				toDeleteServer: function (serverName) {
+					var result = confirm('是否删除 [' + serverName + '] 这个服务端？\n注意: 删除服务器并不会删除服务端文件,只会从控制面板删除！');
+					if (!result) return;
+					WS.sendMsg('server/delete', serverName);
+					RES.redirectPage('./template/server.html', 'server/view');
+				},
+				toTerminal: function (serverName) {
+					//设置全局监听变量
+					MCSERVER.listenServername = serverName;
+					TOOLS.listenTerminal(serverName);
+					// RES.redirectPage('./template/component/terminal.html', null, '');
+				},
+				newDocker: function () {
+					RES.redirectPage('./template/component/new_docker_image.html', null, '');
+				}
+			}
+		});
+	});
+
+	MI.rListener('onend', function () { });
+</script>

@@ -1,0 +1,146 @@
+<div class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">显示</a>
+		</div>
+	</div>
+	<div style="margin-top:60px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row">
+			<div class="mdui-col-md-12">
+				<div class="PanelBody">
+					<div class="mdui-list" style="margin-bottom: 60px;">
+						<p class="mdui-text-color-teal-500">屏幕<br>
+						<li class="mdui-list-item mdui-ripple" onclick="mdui.alert('调整失败')">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">亮度</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">自动调整亮度
+								<label class="mdui-switch" style="float:right;">
+									<input type="checkbox"/>
+										<i class="mdui-switch-icon"></i>
+									</label>
+								</div>
+								<div class="mdui-list-item-text">根据环境光线情况优化亮度</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">LiveDisplay</div>
+								<div class="mdui-list-item-text">基于当前时间和环境条件来优化您的屏幕以改善可读性和减少视觉疲劳</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">旋转设置</div>
+								<div class="mdui-list-item-text">禁用自动旋转</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">壁纸</div>
+								<div class="mdui-list-item-text">不可用</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">休眠</div>
+								<div class="mdui-list-item-text">已禁用</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">屏保</div>
+								<div class="mdui-list-item-text">无</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">主动显示<label class="mdui-switch" style="float:right;">
+									<input type="checkbox" disabled />
+										<i class="mdui-switch-icon"></i>
+									</label></div>
+								<div class="mdui-list-item-text">收到通知时唤醒屏幕</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">连接或移除电源时屏幕唤醒<label class="mdui-switch" style="float:right;">
+									<input type="checkbox" disabled />
+										<i class="mdui-switch-icon"></i>
+									</label></div>
+								<div class="mdui-list-item-text">连接或移除电源时点亮屏幕</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">扩展桌面</div>
+								<div class="mdui-list-item-text">隐藏状态栏或者扩大您的可用桌面空间</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">字体大小</div>
+								<div class="mdui-list-item-text">默认</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">显示大小</div>
+								<div class="mdui-list-item-text">默认</div>
+							</div>
+						</li>
+						<hr>
+						<li class="mdui-list-item mdui-ripple">
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title">投射</div>
+								<div class="mdui-list-item-text">已禁用</div>
+							</div>
+						</li>
+					</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<style>.gray {color: #757575;}</style>
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/display', 'genuser/home', null);
+	})
+	
+	
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

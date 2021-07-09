@@ -1,0 +1,368 @@
+.Block {
+	display: inline-block;
+	background-color: rgb(248, 249, 251);
+	border: 1px solid rgb(225, 225, 225);
+	padding: 8px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.Line {
+	margin: 2px 0 5px 0;
+	border-bottom: 1px solid rgb(15, 15, 16);
+}
+
+.news p {
+	font-size: 12px;
+	font-weight: 400;
+	margin-bottom: 2px;
+}
+
+.news small {
+	font-family: '黑体', '微软雅黑';
+	font-size: 12px;
+	font-weight: 200;
+	margin-left: 20px;
+	;
+}
+
+.Link {
+	font-size: 12px;
+	font-weight: 200;
+	font-family: '黑体', '微软雅黑';
+}
+
+/*通用面板*/
+
+.Panel {
+	/* box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1); */
+	box-shadow: 0 0px 8px 0px rgba(45, 45, 45, 0.47);
+    margin-bottom: 16px;
+    background-color: #fff;
+    border: 0;
+}
+
+/*.PanelBlue {
+	border-top: 3px solid rgba(60, 141, 188, 1);
+}
+
+.PanelGray {
+	border-top: 3px solid #c7c7c7;
+}
+
+.PanelGreen {
+	border-top: 3px solid #00a65a;
+}
+
+.PanelRed {
+	border-top: 3px solid #e00202;
+}
+
+.PanelYellow{
+	border-top: 3px solid #f39c12;
+}
+
+.PanelBlack{
+	border-top: 3px solid #141A1D;
+}*/
+
+.PanelTitle {
+	font-family: 'Source Sans Pro', "微软雅黑", sans-serif;
+	padding: 16px;
+	color:#797979;
+	margin: 0;
+	line-height: 1;
+	/*border-bottom: 1px solid rgb(246, 246, 246);*/
+	background: #fff;
+}
+
+.PanelBody {
+	/*padding: 10px 12px;*/
+	 padding: 0px 12px 1px 12px;
+	font-weight: 400;
+	font-size: 14px;
+}
+/* 
+.PanelBodyFontSize12{
+	font-size: 12px;
+} */
+
+.mdui-panel-item-title {
+	width:100%
+}
+
+/*面板的数据显示css*/
+
+.LogK {
+	color: #7e4b2c;
+	font-size: 13px;
+	text-align: center;
+	height: 50px;
+	line-height: 50px;
+	overflow: hidden;
+}
+
+.LogV {
+	margin: 20px 8px 2px 8px;
+    color: #000;
+    font-size: 20px;
+	text-align: center;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.LogV i {
+	font-size:2em;
+}
+
+.LogCol {
+	/*border-right: 1px solid #6f7376;*/
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+/*Minecraft 服务器列表*/
+
+.PanelItem {
+	background-color:rgba(144, 144, 144, 0.23);
+	padding: 8px 10px;
+	width: 100%;
+	margin-bottom: 10px;
+	overflow: hidden;
+	display: block;
+	cursor: pointer;
+	color: #141A1D;
+	user-select: none;
+}
+.zd {
+	width:330px;
+	height:100px
+}
+
+.PanelItemBlack {
+	background-color: #4a4a4a;
+	color: white;
+}
+
+.PanelItem:hover {
+    background-color:rgba(125, 125, 125, 0.3);
+    /*box-shadow: 0px 0px 5px 0px #b7b7b7;*/
+    transition: all 0.5s;
+}
+
+.PanelItemBlack:hover {
+	background-color: #00733E;
+}
+
+.PanelItem h4 {
+	font-size: 12px;
+	letter-spacing: 1px;
+	font-weight: 800;
+}
+
+/* .PanelItem p {}
+
+.PanelItemInfo {} */
+
+.PanelItemMuem {
+	float: right;
+	height: 100%;
+	/*line-height: 60px;*/
+	margin-right: 15px;
+}
+
+.PanelItemMuem button {
+	margin-left: 8px;
+}
+
+.PanelItemF>.PanelItem {
+	display: inline-block;
+	margin-right: 8px;
+	width: auto;
+}
+
+.PanelItemF>button {
+	margin-right: 15px;
+	margin-bottom:15px;
+	width: auto;
+}
+
+/*大模块*/
+
+.PanelItemBlock {
+	/*display: block;*/
+	background: rgba(230, 230, 230, 0.5);
+	margin: 0px;
+	padding: 8px 4px;
+	cursor: pointer;
+}
+
+.PanelItemBlock:hover {
+	background:rgba(187, 187, 187, 0.5);
+    transition: all 0.7s;
+}
+
+/* 专门用来覆盖 PanelItem 的特殊元素 */
+
+.ItemTableList {
+	padding: 0px 0px;
+	width: 100%;
+	margin-bottom: 0px;
+	border-bottom: 1px solid #d8d8d8;
+    background-color:#fff;
+	transition: all 0.5s;
+}
+
+.input-group {
+	margin-bottom: 10px;
+}
+
+/*控制台*/
+
+#MinecraftConsole {
+	border: 1px solid #dddddd;
+	overflow: auto;
+	width: 100%;
+	resize: none;
+	height: 450px;
+	outline: 0px;
+	text-align: left;
+	font-size: 13px;
+	line-height: 18px;
+	margin: 0px;
+	padding: 3px;
+	word-break: break-all;
+	margin-bottom: 10px;
+}
+
+#TerminalMinecraft {
+	font-family: 'Consolas', 'Courier New', Courier, monospace;
+	overflow: auto;
+	width: 100%;
+	resize: none;
+	outline: 0px;
+	text-align: left;
+	font-size: 12px;
+	line-height: 16px;
+	margin: 0px;
+	word-break: break-all;
+	color: #d8d8d8;
+	padding: 4px 10px;
+}
+
+#TerminalLoad {
+	color: #F7F7F7;
+	font-size: 13px;
+	cursor: pointer;
+	position: absolute;
+	left: 8px;
+	background-color: rgb(212, 136, 30);
+	z-index: 999;
+	box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
+	border-radius: 4px;
+	padding: 2px 4px;
+}
+
+#TerminalCommand {
+	font-family: 'Consolas', 'Courier New', Courier, monospace;
+	/* color: white; */
+	width: 100%;
+	padding: 0 10px;
+	/* background-color: rgb(60, 60, 60); */
+	border: 0px;
+	margin-top: 4px;
+}
+
+#Terminal div,
+#Terminal input,
+#Terminal a {
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.wt {
+	width:750px;
+	height:400px;
+	position:absolute;
+	left: 202px;
+    top: 219px;
+}
+
+.wttitle {
+	background: #309cda;
+    color: #fff;
+}
+
+.wttitle i {
+	float: right;
+    margin-top: -5px;
+	cursor: pointer;
+}
+
+/* 控制台的手机设定 */
+
+@media (max-width:760px) {
+
+	#Terminal div,
+	#Terminal input,
+	#Terminal a {
+		font-size: 8px;
+		font-weight: 400;
+		line-height: 12px;
+	}
+
+}
+
+#Terminal a {
+	color: white;
+}
+
+#TerminalBox {
+	height: 30px;
+	width: 30px;
+	border-radius: 12px;
+	background-color: #DCA7A7;
+	line-height: 30px;
+	color: white;
+	position: absolute;
+	right: 20px;
+	bottom: 50px;
+}
+
+
+
+/* 黑色屏障 */
+
+#balckWarp {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background-color: #141A1D;
+	opacity: 0.6;
+	z-index: 998;
+	display: none;
+	transition: opacity 1s;
+}
+
+#balckWarp:hover {
+	opacity: 0.4;
+}
+
+/* 弹窗CSS */
+
+.PopWin {
+	position: fixed;
+	margin: auto;
+	top: 30%;
+	display: none;
+	z-index: 999;
+	left: 0px;
+	right: 0px;
+}
+
+#PopWinContext {
+	overflow: hidden;
+	zoom: 1;
+}

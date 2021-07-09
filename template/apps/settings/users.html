@@ -1,0 +1,80 @@
+<div id='UsersetList' class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" onclick="RES.redirectPage('./template/apps/settings/settings.html', null);"><i class="mdui-icon material-icons">&#xe317;</i></span>
+			<a href="javascript:;" class="mdui-typo-title">用户</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<span mdui-tooltip="{content: '刷新列表'}" v-on:click="reloadUser()" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"><i class="mdui-icon material-icons">&#xe5d5;</i></span>
+		</div>
+	</div>
+	<div style="margin-top:60px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row">
+			<div class="mdui-col-md-12">
+				<div class="PanelBody">
+					<div class="mdui-list" style="margin-bottom: 60px;">
+						<p class="mdui-text-color-teal-500">用户和个人资料<br>
+						<li class="mdui-list-item mdui-ripple" v-for="item of items" v-on:click="Shit()" style="border-bottom: 0.5px solid #aaa;">
+							<i v-if="item.data.online" class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue-a400">&#xe853;</i>
+							<i v-if="!item.data.online" class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-grey-600">&#xe853;</i>
+							<div class="mdui-list-item-content">
+								<div class="mdui-list-item-title" v-text="item.username"></div>
+								<div class="mdui-list-item-text"><span v-if="TOOLS.isMaster(item.username)">管理员</span><span v-else>普通用户</span></div>
+							</div>
+						</li>
+					</div>
+					
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<style>.gray {color: #757575;}</style>
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/users', 'userset/update', null);
+		
+		VIEW_MODEL.newVue('UsersetList', {
+			el: '#UsersetList',
+			data: {
+				createUser: false,
+				username: '',
+				password: '',
+				allowedServer: ''
+			},
+			methods: {
+				reloadUser: function () {
+					//命令服务器重新刷新
+					WS.sendMsg('userset/reload', '', function () {
+						PAGE.refresh();
+					});
+				},
+				
+				Shit: function () {
+					mdui.alert('无法在此编辑用户信息，请转去 联系人 应用','错误')
+				}
+			}
+		});
+		
+	})
+	
+	
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

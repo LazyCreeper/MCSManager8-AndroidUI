@@ -1,0 +1,107 @@
+<style>
+.num-board {
+    position: fixed;
+    bottom: 56px;
+}
+.num-board button {
+    height: 70px;
+}
+.num-display {
+	height: auto;
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+    width: 100%;
+    position: relative;
+}
+</style>
+<div class="mdui-container-fluid">
+	
+	<div class="num-board">
+	<input id="numdp" class="num-display mdui-typo-display-3">
+		<div class="mdui-row-xs-3">
+			<div class="mdui-col">
+				<button id="num1" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>1</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num2" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>2</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num3" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>3</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num4" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>4</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num5" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>5</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num6" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>6</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num7" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>7</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num8" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>8</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num9" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>9</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="numx" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>*</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="num0" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>0</h2></button>
+			</div>
+			<div class="mdui-col">
+				<button id="numj" class="mdui-btn mdui-btn-block mdui-text-color-blue-a200 mdui-ripple"><h2>#</h2></button>
+			</div>
+			<div class="mdui-col">
+				
+			</div>
+			<div class="mdui-col">
+				<button id="call" class="mdui-btn mdui-btn-block mdui-color-green-600 mdui-ripple"><h2><i class="mdui-icon material-icons">&#xe0b0;</i></h2></button>
+			</div>
+			<div class="mdui-col">
+				
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+		
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(68, 138, 255) 10%, rgb(66, 138, 224) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/phone', 'genuser/home', null);
+		
+		//输入号码
+		$("#num1").click(function(){
+			//不会写，弃坑
+			//请直接在<input>标签内打字
+		});
+		
+		//打电话
+		$("#call").click(function(){
+			var pnumber = $("#numdp").val();
+			window.location.href='tel:'+ pnumber
+		});
+
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

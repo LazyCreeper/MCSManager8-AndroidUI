@@ -1,0 +1,301 @@
+<div class="mdui-container-fluid">
+	<div class="mdui-appbar mdui-appbar-fixed" style="top: 30px;">
+		<div class="mdui-toolbar mdui-color-blue-grey-900">
+			<a href="javascript:;" class="mdui-typo-title">设置</a>
+			<div class="mdui-toolbar-spacer"></div>
+			<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe8b6;</i></a>
+		</div>
+	</div>
+	<div style="margin-top:70px"></div>
+	<div class="mdui-container">
+		<!--信息面板-->
+		<div class="mdui-row"  id="MainINFO">
+			<div class="mdui-col-md-12">
+				<!--建议-->
+				 <div class="mdui-panel" mdui-panel>
+					<div class="mdui-panel-item">
+						<div class="mdui-panel-item-header">
+							<div class="mdui-panel-item-title mdui-text-color-teal-500">建议</div>
+								<i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+							</div>
+						<div class="mdui-panel-item-body">
+							<div class="mdui-list">
+								<li class="mdui-list-item mdui-ripple">
+									<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe923;</i>
+									<div class="mdui-list-item-content">
+										<div class="mdui-list-item-title">升级操作系统</div>
+										<div class="mdui-list-item-text">建议更新到MCSManager 9</div>
+									</div>
+								</li>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--无线和网络-->
+				<div class="mdui-card">
+					<div class="PanelTitle">无线和网络</div>
+					<div class="PanelBody">
+						<div class="mdui-list">
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/WLAN.html', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1ba;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">WLAN</div>
+									<div class="mdui-list-item-text">Xiaomi_3F_5G</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/bluetooth.html', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1a7;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">蓝牙</div>
+									<div class="mdui-list-item-text">已开启</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/data_usage.html', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1af;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">流量使用情况</div>
+									<div class="mdui-list-item-text">已使用 114514 GB的数据</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/more.html', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe5d3;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">更多</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+						</div>
+					</div>
+				</div>
+				
+				<!--设备-->
+				<div class="mdui-card">
+					<div class="PanelTitle">设备</div>
+					<div class="PanelBody">
+						<div class="mdui-list">
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/display.html', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1ac;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">显示</div>
+									<div class="mdui-list-item-text">自动调节亮度功能已禁用</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe7f4;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">通知</div>
+									<div class="mdui-list-item-text">系统通知已开启</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe050;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">声音</div>
+									<div class="mdui-list-item-text">铃声音量为75%</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/apps.html','server/view', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe60e;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">应用</div>
+									<div class="mdui-list-item-text">管理已安装的应用</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1db;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">存储</div>
+									<div class="mdui-list-item-text">无法访问磁盘！</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe1a6;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">电池</div>
+									<div class="mdui-list-item-text">114514%</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/memory.html','center/show', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe322;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">内存</div>
+									<div class="mdui-list-item-text">查看内存占用</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/users.html','userset/update', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe7fd;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">用户</div>
+									<div class="mdui-list-item-text">目前登录的用户名为：<span id="username"></span></div>
+									<script>$('#username').text(MCSERVER.username)</script>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe913;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">手势</div>
+									<div class="mdui-list-item-text">暂不支持</div>
+								</div>
+							</li>
+							
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe312;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">按键</div>
+									<div class="mdui-list-item-text">暂不支持</div>
+								</div>
+							</li>
+							
+						</div>
+					</div>
+				</div>
+				
+				<!--个人-->
+				<div class="mdui-card">
+					<div class="PanelTitle">个人</div>
+					<div class="PanelBody">
+						<div class="mdui-list">
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe0c8;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">位置信息</div>
+									<div class="mdui-list-item-text">开启/低精确度</div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple"  onclick="RES.redirectPage('./template/apps/settings/security.html', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe897;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">安全</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe851;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">账号</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe32a;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">隐私</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe069;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">状态栏</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe562;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">系统背景</div>
+									<div class="mdui-list-item-text">默认</div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe894;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">语言和输入法</div>
+									<div class="mdui-list-item-text">中文（中国）</div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe2c3;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">备份和重置</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+						</div>
+					</div>
+				</div>
+				
+				<!--系统-->
+				<div class="mdui-card" style="margin-bottom: 70px;">
+					<div class="PanelTitle">系统</div>
+					<div class="PanelBody">
+						<div class="mdui-list">
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe192;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">日期和时间</div>
+									<div class="mdui-list-item-text">GMT+8：00 中国标准时间</div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe84e;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">无障碍</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe555;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">打印</div>
+									<div class="mdui-list-item-text">0 项打印服务</div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe429;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">开发者选项</div>
+									<div class="mdui-list-item-text"></div>
+								</div>
+							</li>
+							<li class="mdui-list-item mdui-ripple" onclick="RES.redirectPage('./template/apps/settings/about.html','center/show', null);">
+								<i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-teal-500">&#xe88f;</i>
+								<div class="mdui-list-item-content">
+									<div class="mdui-list-item-title">关于平板电脑</div>
+									<div class="mdui-list-item-text">Android 7.1.2</div>
+								</div>
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+		
+<script>
+	$(document).ready(function(){
+		//初始化MDUI控件
+		mdui.mutation()
+    });
+	//创建
+	MI.rListener('onload', function () {
+		//更改样式
+		$('#Header').css('background-image', 'linear-gradient(rgb(26 35 39) 10%, rgb(38 50 56) 100%)');
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgb(0, 0, 0) 10%, rgb(0, 0, 0) 100%)');
+		
+		// 定义页面地址
+		TOOLS.definePage('template/apps/settings/settings', 'genuser/home', null);
+
+	})
+
+	//关闭
+	MI.rListener('onend', function () {
+		//还原样式
+		$('#Header').css('background-image', 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 10%, rgba(12, 12, 12,) 100%)');	
+		$('.mdui-bottom-nav').css('background-image', 'linear-gradient(0deg, rgba(0, 0, 0, 0.4) 10%, rgba(12, 12, 12, 0.4) 100%)');
+	})
+</script>

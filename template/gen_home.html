@@ -1,0 +1,155 @@
+<div id='GenHome' class="OneContainer mdui-typo">
+	<div class="mdui-row">
+		<div class="mdui-col-md-4">
+			<div class="Panel PanelBlack">
+				<div class="PanelTitle">用户信息</div>
+				<div class="PanelBody">
+				    <div class="mdui-chip width-100 mb10" mdui-tooltip="用户名">
+                        <span class="mdui-chip-icon bg-green"><i class="mdui-icon material-icons">face</i></span>
+                        <span class="mdui-chip-title">用户名: {{ username }}</span>
+                    </div>
+					
+					<div class="mdui-chip width-100 mb10" mdui-tooltip="创建时间">
+                        <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">&#xe8b3;</i></span>
+                        <span class="mdui-chip-title">创建时间: {{ createDate }}</span>
+                    </div>
+					
+					<div class="mdui-chip width-100 mb10" mdui-tooltip="最后上线">
+                        <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">&#xe192;</i></span>
+                        <span class="mdui-chip-title">最后上线: {{ lastDate }}</span>
+                    </div>
+					
+				</div>
+			</div>
+			<div class="Panel PanelBlue">
+				<div class="PanelTitle">用户 {{ username }} 的服务器</div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-sm-6">
+							<div class="LogV">{{ AllServerLen }} 个</div>
+							<div class="LogK">服务器总数 </div>
+						</div>
+						<div class="mdui-col-sm-6">
+							<div class="LogV">{{ OnlineLen }} 个</div>
+							<div class="LogK">正在运行的服务器</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="Panel PanelGreen">
+				<div class="PanelTitle">用户 {{ username }}，欢迎使用</div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-sm-6">
+						    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-btn-block mdui-color-blue-a200" v-on:click="toRePassword()"><i class="mdui-icon material-icons">&#xe3c9;</i> 修改密码</button>
+						</div>
+						<div class="mdui-col-sm-6 mb10">
+							<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-btn-block mdui-color-blue-grey-400"onclick="mdui.alert('暂无说明')"><i class="mdui-icon material-icons">&#xe8fd;</i> 使用说明</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mdui-col-md-8">
+			<div class="Panel PanelBlack">
+				<div class="PanelTitle">用户 {{ username }} 持有的服务器</div>
+				<div class="PanelBody">
+					<div class="mdui-row">
+						<div class="mdui-col-md-12">
+							<div class="PanelItem ItemTableList mdui-ripple" v-for="item of userServerList">
+						<div class="mdui-row" style="margin: 9px -8px 9px -8px;">
+							<div class="mdui-col-md-7">
+								<div class="PanelItemInfo">
+								    <div class="mdui-chip" mdui-tooltip="{content: '服务器名称'}"> 
+                                        <span class="mdui-chip-icon bg-green" > <i class="mdui-icon material-icons">storage</i> </span> 
+                                        <span class="mdui-chip-title">{{item.serverName}}</span> 
+                                     </div>
+									 <span style="margin-left: 4px;"></span>
+									 <div class="mdui-chip"> 
+                                        <span class="mdui-chip-icon mdui-color-amber-400" ><i class="mdui-icon material-icons">&#xe87b;</i></span> 
+                                        <span class="mdui-chip-title" v-text="'服务端文件名:' + item.jarName || '未设置'">Loading...</span> 
+                                     </div>
+								    <br>
+									 
+									<!--是否在线纸片-->
+						    		<div class="mdui-chip" v-if="item.run"> 
+                                        <span class="mdui-chip-icon mdui-color-blue" > <i class="mdui-icon material-icons">check</i> </span> 
+                                        <span class="mdui-chip-title">正在运行</span> 
+                                     </div>
+									 
+									 <div class="mdui-chip" v-else="item.run"> 
+                                        <span class="mdui-chip-icon mdui-color-red"> <i class="mdui-icon material-icons">close</i> </span> 
+                                        <span class="mdui-chip-title">关闭</span> 
+                                     </div>
+									 <span style="margin-left: 4px;"></span>
+									
+	                                <div class="mdui-chip" mdui-tooltip="{content: '最后运行'}">
+                                        <span class="mdui-chip-icon mdui-color-blue-a200"><i class="mdui-icon material-icons">&#xe889;</i></span>
+                                        <span class="mdui-chip-title"><b v-text="item.lastDate">Loading...</b></span>
+                                    </div>	
+									<span style="margin-left: 4px;"></span>
+									
+									<div class="mdui-chip" mdui-tooltip="{content: '到期时间'}">
+                                        <span class="mdui-chip-icon mdui-color-blue-a200"><i class="mdui-icon material-icons">access_time</i></span>
+                                        <span class="mdui-chip-title"><b v-text="item.timeLimitDate">Loading...</b></span>
+                                    </div>	
+									<span style="margin-left: 4px;"></span>
+									   
+									</div>
+								</div>
+							
+							<div class="col-md-5 NextCol">
+								<div class="PanelItemMuem" style="line-height: 60px;">
+									<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-grey-700" v-on:click="toTerminal(item.serverName);">
+							                <span class="mdui-icon material-icons" >code</span>
+							    	        终端
+						            </button>
+									<button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-pink-a200" v-on:click="toConsole(item.serverName)">
+							         <i class="mdui-icon material-icons">&#xe8b8;</i>
+							    	控制 | 管理
+						            </button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--js-->
+<script>
+document.title="用户中心 - MCSM 管理面板";
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		TOOLS.definePage('template/gen_home', 'genuser/home', '');
+
+		// MCSERVER.colmSet(false);
+		VIEW_MODEL.newVue('GenHome', {
+			el: '#GenHome',
+			methods: {
+				toConsole: function (serverName) {
+					MCSERVER.listenServername = serverName;
+					RES.redirectPage('./template/component/console.html', 'server/console', serverName);
+				},
+				toTerminal: function (serverName) {
+					//设置全局监听变量
+					MCSERVER.listenServername = serverName;
+					TOOLS.listenTerminal(serverName);
+					// RES.redirectPage('./template/component/terminal.html', null, '');
+				},
+				toRePassword: function () {
+					RES.redirectPage('./template/component/gen_repassword.html');
+				}
+			}
+		});
+	})
+
+	MI.rListener('onend', function () { })
+</script>

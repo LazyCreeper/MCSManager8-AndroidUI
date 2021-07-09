@@ -1,0 +1,449 @@
+<script>
+	   $(document).ready(function(){
+			mdui.mutation()
+            //console.log('服务器管理页面MDUI组件已加载完毕');
+         });
+  </script>
+<div id='ConsolePanel' class="OneContainer">
+	<div class="mdui-row">
+		<div class="mdui-col-md-3">
+		
+			<div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">服务端信息</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+					
+                    <div class="mdui-chip mb10 width-100" mdui-tooltip="{content: '名称'}">
+                        <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">edit</i></span>
+                        <span class="mdui-chip-title">名称：{{ serverData.name }}</span>
+                    </div>
+					
+					<div class="mdui-chip mb10 width-100" mdui-tooltip="{content: 'CPU 使用率'}">
+                        <span class="mdui-chip-icon mdui-color-black"><i class="mdui-icon material-icons">&#xe322;</i></span>
+                        <span class="mdui-chip-title">CPU 使用率：{{ sysCpu }} %</span>
+                    </div>
+					
+					<div class="mdui-chip mb10 width-100" mdui-tooltip="{content: 'RAM 使用率'}">
+                        <span class="mdui-chip-icon mdui-color-yellow-600"><i class="mdui-icon material-icons">donut_large</i></span>
+                        <span class="mdui-chip-title">内存 使用率: {{ (100 - sysMonery).toFixed(1) }} %</span>
+                    </div>
+					
+					<div class="mdui-chip mb10 width-100" v-if="run" mdui-tooltip="{content: '状态'}"> 
+                        <span class="mdui-chip-icon bg-green" > <i class="mdui-icon material-icons">check</i> </span> 
+                         <span class="mdui-chip-title">状态：正在运行</span> 
+                    </div>
+							 
+					<div class="mdui-chip mb10 width-100" v-if="!run" mdui-tooltip="{content: '状态'}"> 
+                        <span class="mdui-chip-icon mdui-color-red"> <i class="mdui-icon material-icons">close</i> </span> 
+                        <span class="mdui-chip-title">状态：未运行</span> 
+                    </div>
+					
+                    </div>
+                </div>
+            </div>
+			
+			<div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">服务端操作</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+						<button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-grey-800 mdui-ripple"  v-on:click="toTerminal()"><i class="mdui-icon material-icons">&#xe895;</i> 模拟型终端</button><br>
+			             <transition name="slide-fade">
+					    <button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-blue-a400 mdui-ripple"  v-on:click="toOpenServer()" v-show="!run"><i class="mdui-icon material-icons">&#xe8ac;</i> 开启服务器</button>
+					</transition>
+					<transition name="slide-fade">
+						
+						 <button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-red-a400 mdui-ripple mb10" v-on:click="toCommand('__stop__')" v-show="run"><i class="mdui-icon material-icons">&#xe8ac;</i> 关闭服务器</button>
+					</transition>
+					<button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-brown mdui-ripple mb10" v-on:click="toCommand('__restart__')" v-show="run"><i class="mdui-icon material-icons">refresh</i> 重启服务器</button>
+					
+					<button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-grey-900 mdui-ripple mb10" v-on:click="toCommand('__killserver__')" v-show="run"><i class="mdui-icon material-icons">close</i> 强制性结束进程</button>
+					 </div>
+                </div>
+            </div>
+			
+			<div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">崩溃监视与配置</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+					    <button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-blue-grey-400 mdui-ripple mb10"v-on:click="toProperties()"><i class="mdui-icon material-icons">&#xe85d;</i> Server.properties 配置文件</button>
+			            
+					<transition name="slide-fade">
+					    <button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-grey-600 mdui-ripple mb10"v-on:click="toAutoRestart(false)" v-show="serverData.autoRestart"><i class="mdui-icon material-icons">check</i>崩溃重启：
+							<span style="color: #29b90c;">打开</span></button>
+					</transition>
+					
+					<transition name="slide-fade">
+						<button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-grey-600 mdui-ripple mb10"v-on:click="toAutoRestart(true)" v-show="!serverData.autoRestart"><i class="mdui-icon material-icons">close</i>崩溃重启：
+							<span style="color: rgb(255, 44, 44);">关闭</span></button>
+					</transition>
+					 </div>
+                </div>
+            </div>
+			
+			<div class="mdui-panel" mdui-panel  v-if="isFtpOpen">
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">FTP 链接信息</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+					 <div class="mdui-panel-item-body">
+					 
+					<div class="mdui-chip mb10 width-100" mdui-tooltip="{content: '账号'}">
+                        <span class="mdui-chip-icon mdui-color-blue"><i class="mdui-icon material-icons">&#xe851;</i></span>
+                        <span class="mdui-chip-title">账号: {{ MCSERVER.username + "." +
+						serverData.name }}</span>
+                    </div>
+					
+					<div class="mdui-chip mb10 width-100" mdui-tooltip="{content: '端口'}">
+                        <span class="mdui-chip-icon mdui-color-yellow-600"><i class="mdui-icon material-icons">&#xe8ab;</i></span>
+                        <span class="mdui-chip-title">端口: {{ FTP_port }}</span>
+                    </div>
+					
+					<div class="mdui-chip mb10 width-100" mdui-tooltip="{content: '密码'}">
+                        <span class="mdui-chip-icon mdui-color-green-600"><i class="mdui-icon material-icons">lock</i></span>
+                        <span class="mdui-chip-title">密码: 
+						<span style="color: #666666;">&lt;与登陆密码相同&gt;</span></span>
+                    </div>
+					
+					<div class="mdui-chip mb10 width-100" mdui-tooltip="{content: '密码'}">
+                        <span class="mdui-chip-icon mdui-color-teal-500"><i class="mdui-icon material-icons">near_me</i></span>
+                        <span class="mdui-chip-title">模式:
+						<span style="color: #666666;">&lt;被动传输模式&gt;</span></span>
+                    </div>
+				
+					</div>
+                </div>
+			 </div>
+           
+			
+			<div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">普通外置接口</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+					 <button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-blue-grey-400 mdui-ripple mb10" v-on:click="toAPI_JSON()">
+					 <i class="mdui-icon material-icons">&#xe2bc;</i>
+					 格式 JSON | API 接口
+					 </button>
+			         <button class="mdui-btn mdui-btn-raised mdui-btn-block mdui-color-blue-grey-400 mdui-ripple mb10" v-on:click="toAPI_Image()">
+					 <i class="mdui-icon material-icons">&#xe3ad;</i>
+					 状态贴图
+					 </button>
+					 </div>
+                </div>
+            </div>
+			
+		</div>
+		
+		
+		<div class="mdui-col-md-9">
+		<div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">服务器控制组</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+			            <div class="mdui-col-md-3 col-sm-6 mdui-ripple"
+							v-on:click="RES.redirectPage('./template/component/terminal.html', null, '')">
+							<div class="PanelItemBlock">
+								<div class="LogV">
+									<i class="mdui-icon material-icons" >code</i>
+								</div>
+								<div class="LogK">命令控制台</div>
+							</div>
+						</div>
+						<div class="mdui-col-md-3 col-sm-6 mdui-ripple" v-on:click="toOnlineFs()">
+							<div class="PanelItemBlock">
+								<div class="LogV">
+									<i class="mdui-icon material-icons" >folder_open</i>
+								</div>
+								<div class="LogK">文件在线管理</div>
+							</div>
+						</div>
+						<div class="mdui-col-md-3 col-sm-6 mdui-ripple" v-on:click="toSchedule()">
+							<div class="PanelItemBlock">
+								<div class="LogV">
+									<i class="mdui-icon material-icons">&#xe23d;</i>
+								</div>
+								<div class="LogK">计划任务项目</div>
+							</div>
+						</div>
+						<div class="mdui-col-md-3 col-sm-6 mdui-ripple" v-on:click="toPingMCProtocol()">
+							<div class="PanelItemBlock">
+								<div class="LogV" style="font-size: 18px;">
+									<!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"> </span> -->
+									<strong>
+										<span>
+											<span style="color: rgb(38, 165, 26);"
+												v-text="mcping.current_players"></span>
+											<span style="color: rgb(0, 0, 0);">/</span>
+											<span style="color: rgb(38, 165, 26);" v-text="mcping.max_players"></span>
+										</span>
+									</strong>
+								</div>
+								<div class="LogK">
+									<span>状态监控协议</span>
+								</div>
+							</div>
+						</div>
+					 </div>
+                </div>
+            </div>
+			
+		</div>
+		<div class="mdui-col-md-9" id='ChartCPUFor'>
+		    <div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">中央处理器 使用率 （%）</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+					    <div id="ChartCPU" style="height:280px;width:100%;"></div>
+				     </div>
+                </div>
+            </div>
+		</div>
+		<div class="mdui-col-md-3"></div>
+		<div class="mdui-col-md-9">
+			<div class="mdui-panel" mdui-panel>
+                <div class="mdui-panel-item mdui-panel-item-open">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">物理内存 使用率 （%）</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+					    <div id="ChartRAM" style="height:280px;width:100%;"></div>
+				     </div>
+                </div>
+            </div>		
+		</div>
+	</div>
+</div>
+<script>
+document.title="服务器控制台 - MCSM 管理面板";
+
+	MI.rListener('onload', function () {
+		// 定义页面地址
+		TOOLS.definePage('template/component/console', 'server/console', MCSERVER.listenServername);
+
+
+		var serverName = MCSERVER.listenServername;
+
+
+		VIEW_MODEL.newVue('ConsolePanel', {
+			el: '#ConsolePanel',
+			methods: {
+				toAutoRestart: function () {
+					WS.sendMsg('server/console/autorestart', serverName);
+				},
+				toOnlineFs: function () {
+					var path = MCSERVER.URL("fs_auth/auth/" + encodeURIComponent(serverName));
+					window.open(path);
+				},
+				toOpenServer: function () {
+					this.allowedStart = !this.allowedStart;
+					WS.sendMsg('server/console/open', serverName);
+				},
+				toCommand: function (parCommand) {
+					if (parCommand && typeof (parCommand) == 'string') this.command = parCommand;
+					var data = {
+						command: this.command,
+						serverName: serverName
+					};
+					if (this.command.length >= 1 || typeof (parCommand) == 'string') {
+						WS.sendMsg('server/console/command', JSON.stringify(data));
+					}
+					this.command = '';
+				},
+				toProperties: function () {
+					RES.redirectPage('./template/component/properties.html', 'server/properties', serverName);
+				},
+				toTerminal: function () {
+					TOOLS.listenTerminal(serverName);
+				},
+				toSchedule: function () {
+					RES.redirectPage('./template/component/schedule.html', 'schedule/list', serverName);
+				},
+				toAPI_JSON: function () {
+					window.open("/api/status/" + serverName);
+				},
+				toAPI_PAGE: function () {
+					window.open("/api/status/" + serverName);
+				},
+				toAPI_Image: function () {
+					RES.redirectPage('./template/component/server_Image.html');
+				},
+				toPingMCProtocol: function () {
+					PAGE.listenServername = MCSERVER.listenServername;
+					TOOLS.popWind({
+						style: {
+							maxWidth: "500px",
+							top: "10%"
+						},
+						title: "监控协议配置",
+						template: "template/dialog/pingmc_config.html"
+					});
+				}
+			},
+			data: {
+				command: "",
+				allowedStart: true,
+				runStatusClass: '',
+				username: MCSERVER.listenServername
+			},
+			watch: {
+				run: function (cur, old) { }
+			}
+		});
+		
+
+		// 服务器状态请求
+		PAGE.timerR = setInterval(function () {
+			WS.sendMsg('server/console', MCSERVER.listenServername);
+		}, 3000);
+
+		//CPU
+		var CPUoption = TOOLS.charts.DefOption;
+		var RAMoption = TOOLS.charts.DefOption;
+
+		//表格
+		var ChartCPU = null;
+		var ChartRAM = null;
+		PAGE.ChartLogIs = true;
+		TOOLS.charts.bulider('ChartCPU', 24, {}, function (chart) {
+			ChartCPU = chart;
+
+			function doing() {
+				chart.replaceData(VIEW_MODEL['ConsolePanel'].CPUlog);
+				//chart.pushData(getNowFormatDate(), GetRandomNum(1, 40));
+				chart.reOption();
+				if (PAGE.ChartLogIs) setTimeout(doing, 4000);
+			}
+			doing();
+		}, CPUoption);
+		//ChartRAM
+		TOOLS.charts.bulider('ChartRAM', 24, {}, function (chart) {
+			ChartRAM = chart;
+
+			function doing() {
+				chart.replaceData(VIEW_MODEL['ConsolePanel'].RAMlog);
+				//chart.pushData(getNowFormatDate(), GetRandomNum(1, 40));
+				chart.reOption();
+				if (PAGE.ChartLogIs) setTimeout(doing, 4000);
+			}
+			doing();
+		}, CPUoption);
+
+		PAGE.chartResizeFunc = function () {
+			ChartCPU.chart.resize();
+			ChartRAM.chart.resize();
+		}
+
+		MI.listener('colmchangeEnd', PAGE.chartResizeFunc);
+		MI.listener('resize', PAGE.chartResizeFunc);
+
+		VIEW_MODEL.newVue('Terminal', {
+			el: '#Terminal',
+			data: {
+				allowedStart: true,
+				command: '',
+				commandList: [],
+				commandListPrint: 0,
+				historyIf: false,
+				isHistoryMode: false
+			},
+			methods: {
+				toOpenServer: function () {
+					WS.sendMsg('server/console/open', PAGE.serverName);
+				},
+				toCommand: function (parCommand) {
+					if (parCommand && typeof (parCommand) == 'string') this.command = parCommand;
+					MCSERVER.term.prompt(this.command);
+					var data = {
+						command: this.command,
+						serverName: MCSERVER.listenServername
+					};
+					if (this.command.length >= 1 || typeof (parCommand) == 'string') {
+						//压入命令栈 并 发送
+						this.commandList.unshift(this.command);
+						WS.sendMsg('server/console/command', JSON.stringify(data));
+					}
+					this.command = '';
+					this.commandListPrint = 0;
+
+				},
+				toCommandhi: function (fl) {
+					if (this.commandListPrint > (this.commandList.length - 1)) this.commandListPrint = this.commandList.length -
+						1;
+					if (this.commandListPrint < 0) this.commandListPrint = 0;
+					if (fl == 1) { //up
+						this.command = this.commandList[this.commandListPrint];
+						this.commandListPrint++;
+					} else { //down
+						this.command = this.commandList[this.commandListPrint];
+						this.commandListPrint--;
+					}
+					return false;
+				},
+				stopServer: function () {
+					this.toCommand('__stop__');
+				},
+				
+				loadHistory: function (bool) {
+					if (!this.isHistoryMode) {
+						$('#WebTerminal').css('display', 'none');
+						$('#LogHistoryTerminal').removeAttr('style');
+						// 加载下一页历史记录
+						WS.sendMsg('server/console/history', JSON.stringify({
+							serverName: PAGE.serverName
+						}));
+						this.isHistoryMode = true;
+					} else {
+						$('#WebTerminal').removeAttr('style');
+						$('#LogHistoryTerminal').css('display', 'none').html('');
+						// 重置历史记录指针
+						WS.sendMsg('server/console/history_reset', JSON.stringify({
+							serverName: PAGE.serverName
+						}));
+						this.isHistoryMode = false;
+					}
+				},
+				simpleLoadHistory: function () {
+					WS.sendMsg('server/console/history', JSON.stringify({
+						serverName: PAGE.serverName
+					}));
+				}
+			}
+		});
+	
+	});
+	
+	function wtlload(){
+	if(location.href.indexOf("#reloaded")==-1){
+        location.href=location.href+"#reloaded";
+        //location.reload();
+    }
+	}
+
+	MI.rListener('onend', function () {
+		clearInterval(PAGE.timerR);
+		MI.onDestroy('colmchangeEnd', PAGE.chartResizeFunc);
+		MI.onDestroy('resize', PAGE.chartResizeFunc);
+		PAGE.ChartLogIs = false;
+		$('div').remove('.mdui-tooltip');
+	});
+
+</script>
